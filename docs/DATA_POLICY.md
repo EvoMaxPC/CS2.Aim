@@ -79,3 +79,63 @@ Si cualquier usuario o contribuyente detecta un valor desactualizado tras un par
 
 1. Abre un Issue con la plantilla obligatoria [`.github/ISSUE_TEMPLATE/data_correction.yml`](../.github/ISSUE_TEMPLATE/data_correction.yml) adjuntando la fuente verificable y los pasos de reproducción.
 2. Un mantenedor reproduce la medición, actualiza el catálogo con la nueva fecha `retrievedAt`, versión de CS2 y `verifiedBy`, y añade un caso de test de regresión.
+
+---
+
+## 7. Licencia de los Datos en `/packages/data` (`CC BY 4.0` — Estado `PROPUESTA`, `DT-03`)
+
+De conformidad con `ADR-0008` y `ADR-0014`, EVO-AIM-CS2 separa el licenciamiento del código ejecutable de software del licenciamiento de los catálogos curados de datos:
+
+1. **Estado actual (`PROPUESTA` — pendiente de confirmación explícita del mantenedor en `DT-03`):** se propone licenciar los catálogos verificados de armas, escenarios declarativos y fichas científicas de `/packages/data` bajo **Creative Commons Attribution 4.0 International (`CC BY 4.0`)** (frente a la alternativa de dominio público `CC0 1.0`).
+2. **Reglas de atribución bajo `CC BY 4.0`:**
+   - Cualquier redistribución o adaptación sustancial de los catálogos curados de `/packages/data` debe conservar el crédito a `"EVO-AIM-CS2 contributors"`, un enlace al repositorio (`https://github.com/EvoMaxPC/evo-aim-cs2`), un enlace a `https://creativecommons.org/licenses/by/4.0/` y una nota indicando si se realizaron modificaciones.
+   - Los hechos físicos o matemáticos puros (p. ej. una cadencia en RPM o una relación trigonométrica) no reclaman monopolio autoral en sí mismos; `CC BY 4.0` protege y acredita el trabajo de verificación reproducible, curación documental, estructuración y redacción original de las notas y fichas científicas.
+3. **Compatibilidad con `Apache-2.0`:**
+   - Todo el código fuente ejecutable (`.ts`/`.tsx`), incluidos los validadores Zod e interfaces de `/packages/data`, permanece bajo **`Apache-2.0`** ([`LICENSE`](../LICENSE)).
+   - `CC BY 4.0` y `Apache-2.0` coexisten limpiamente en una misma aplicación de escritorio siempre que los datos se consuman como recursos estructurados separados del código ejecutable y `THIRD_PARTY_NOTICES.md` / la sección "Acerca de" mantengan los avisos de atribución correspondientes.
+4. **Incorporación del texto legal en Capa 6:** dado que entre las Capas 1 y 5 `/packages/data` es únicamente un paquete esqueleto sin catálogos publicados, **el archivo con el texto íntegro de la licencia de datos (`packages/data/LICENSE-DATA`) se incorporará en la Capa 6** junto con los primeros catálogos reales tras la confirmación de `DT-03`.
+
+---
+
+## 8. Procedimiento de Medición Propia Reproducible (`ADR-0019`)
+
+Conforme a [`ADR-0019`](./adr/0019-validated-means-reproducible-measurement.md), **ningún parámetro empírico de CS2 puede pasar a `verified: true` ("Validated") por memoria, por estimación de IA ni copiando wikis o tablas secundarias sin replicación local**. Todo parámetro marcado con `sourceTier: 'empirical-reproducible'` debe superar el siguiente protocolo paso a paso:
+
+### 8.1 Pasos obligatorios sin violar límites anti-cheat (`ADR-0007`)
+
+1. **Entorno limpio y auditable:**
+   - Iniciar una instancia local estándar de Counter-Strike 2 desde Steam en modo **Práctica local sin conexión / servidor local vacío** (jamás servidores comunitarios modificados).
+   - **Prohibición estricta:** cero lectura de memoria de `cs2.exe`, cero DLLs, cero hooks y cero extracción de binarios con copyright. Solo se emplean comandos legítimos de consola del motor (`status`, `version`, `sensitivity`, `m_yaw`, `zoom_sensitivity_ratio`, `cl_showpos 1`, servidor local con `sv_cheats 1` cuando el comando diagnóstico lo requiera) o captura externa de vídeo/traza HID del propio sistema operativo en laboratorio.
+2. **Registro exacto de versión del juego y configuración:**
+   - Ejecutar `version` / `status` en la consola de CS2 y anotar número de build, fecha del parche de CS2, sistema operativo, resolución, relación de aspecto (`4:3`, `16:9`, `16:10`, `21:9`) y convars relevantes.
+3. **Ejecución repetida ($N \ge 10$ repeticiones independientes cuando haya componente humana o temporal):**
+   - Para **ángulos y zoom (`yaw`, `FOV`, `zoom_sensitivity_ratio`):** enviar desplazamientos discretos conocidos de _counts_ o comparar referencias geométricas en pantalla con `cl_showpos 1`, anotando ángulo inicial, ángulo final y $\Delta\text{yaw}$ / $\Delta\text{pitch}$ en cada repetición.
+   - Para **cadencia, velocidad y frenado (`counter-strafe`):** grabar vídeo local a alta tasa de refresco ($\ge 120\text{–}240\text{ fps}$) con `cl_showpos 1` visible o marcas de tiempo de consola, midiendo intervalos entre disparos o caída de velocidad horizontal `vel`.
+   - Para **patrones de _recoil_ / dispersión:** disparar ráfagas completas contra un plano perpendicular a distancia fija documentada en servidor local de práctica, midiendo coordenadas angulares de cada impacto respecto al origen de puntería en múltiples series para separar el patrón determinista de la dispersión aleatoria.
+4. **Cálculo estadístico e incertidumbre:**
+   - Calcular media, desviación típica y cota de error de medición (p. ej. resolución angular de `cl_showpos` o $\pm 1\text{ frame}$ de cámara). Si la incertidumbre excede la tolerancia del `Quality Bar` aplicable (`QB-17`, `QB-18`, `QB-19`), el dato permanece como `verified: false` indicando la cota observada.
+5. **Revisión cruzada en PR:**
+   - Adjuntar el bloque completo de registro de medición en la descripción del PR (o archivo de notas de evidencia enlazado en `provenance.notes`) para que cualquier revisor pueda repetir los pasos en $< 15\text{ min}$ y obtener el mismo resultado dentro de la tolerancia declarada.
+
+### 8.2 Plantilla Obligatoria de Registro de Medición Reproducible
+
+```markdown
+### Registro de Medición Reproducible — `<id_parametro_o_arma>`
+
+- **Parámetro(s) medido(s):** `<ej. m_yaw base / vFOV 4:3 / cadencia AK-47>`
+- **Estado resultante:** `verified: true` | `verified: false (por verificar)`
+- **Fecha UTC (`retrievedAt`):** `YYYY-MM-DDTHH:mm:ssZ`
+- **Autor de la medición (`verifiedBy`):** `@<github-handle>`
+- **Versión / Build de CS2 (`cs2PatchOrVersion`):** `<salida literal de 'version' en consola de CS2>`
+- **Entorno de prueba:** `<SO + versión, resolución, aspect ratio, Hz, método de entrada>`
+- **Convars exactos fijados:** `<ej. sensitivity 1.0; m_yaw 0.022; zoom_sensitivity_ratio 1.0; cl_showpos 1>`
+- **Procedimiento paso a paso (100 % reproducible sin herramientas prohibidas):**
+  1. `<paso 1>`
+  2. `<paso 2>`
+  3. `<paso 3>`
+- **Datos brutos observados ($N$ ensayos):**
+  - Ensayo 1: `<valor>` | Ensayo 2: `<valor>` | ... | Ensayo N: `<valor>`
+- **Valor consolidado e incertidumbre:** `<media ± desviación / margen de error>`
+- **Comparación contra tolerancia (`QB-17` / `QB-18` / `QB-19`):** `<cumple / no cumple>`
+- **Limitaciones o supuestos abiertos:** `<notas honestas>`
+```
