@@ -71,6 +71,7 @@ Al cerrar cualquier tarea o capa (a partir de la Capa 1 cuando existan scripts):
 3. Actualizar [`/PROGRESS.md`](./PROGRESS.md) marcando las subtareas completadas, fecha, rama y notas.
 4. Firmar los commits con DCO (`git commit -s`) siguiendo Conventional Commits (`docs:`, `feat(core):`, `fix(engine):`, etc.).
 5. Respetar la política de ramas del entorno: si trabajas en Arena Agent Mode, haz todos los commits en la rama activa fijada por la sesión; fuera de Arena, usa ramas `layer/NN-nombre` o `feat/...`.
+6. **Publicación obligatoria inmediata (`git push`):** ejecuta `git push origin <rama-activa>` inmediatamente después de cada commit o grupo de commits y siempre antes de cerrar cada turno, de modo que una rehidratación del contenedor nunca pierda objetos `.git/objects/` ni historial de commits. Nunca uses `--force`.
 
 ---
 
