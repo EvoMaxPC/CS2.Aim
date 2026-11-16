@@ -1,42 +1,45 @@
 # PROGRESS.md — Seguimiento Maestro de Avance por Capas
 
-- **Propósito:** Fuente única de verdad sobre el estado de ejecución de las Capas 0–17, Spikes técnicos (`SPIKE-1`..`SPIKE-6`) y Deuda Técnica de EVO-AIM-CS2.
+- **Propósito:** Fuente única de verdad sobre el estado de ejecución de las Capas `0`, `0.1`, `1`, `1.1` y `2`–`17`, Spikes técnicos (`SPIKE-1`..`SPIKE-6`) y Deuda Técnica de EVO-AIM-CS2.
 - **Fecha de última actualización:** 2026-11-13
-- **Versión:** 1.1.0
-- **Estado actual del proyecto:** **Capa 1 completada en código y verificada en Linux Node/Vite** (`layer-1-done` pendiente de PR/CI y checklist `docs/VERIFY_ON_WINDOWS.md`) — Próxima capa: **Capa 2 (Núcleo Matemático, Sensibilidad, FOV y PRNG)**
+- **Versión:** 1.2.0
+- **Estado actual del proyecto:** **Capas 0 y 1 fusionadas en `main` (`8dd50b2`, CI verde en Windows y Ubuntu) · Capa 0.1 completada en rama activa (`arena/32dae8fb-cs2-aim`, pendiente de PR y tag `layer-0.1-done`)** — Próxima capa: **Capa 1.1 (Infraestructura de Código de Adaptabilidad y Arnés de Personas Sintéticas)**
+- **Lectura obligatoria previa a cualquier intervención:** `AGENTS.md`, `PROGRESS.md`, `docs/ARCHITECTURE.md`, `docs/CONVENTIONS.md`, `docs/QUALITY_BARS.md`, `docs/DATA_POLICY.md`, `docs/PERSONAS_MATRIX.md`, `docs/SUPPORTED_RANGES.md` y `docs/FIDELITY_SPEC.md`.
 
 ---
 
 ## Resumen Ejecutivo de Capas
 
-| Capa   | Nombre                                                       | Estado                                      | Fecha cierre | Rama                     | PR / Tag                                                        |
-| ------ | ------------------------------------------------------------ | ------------------------------------------- | ------------ | ------------------------ | --------------------------------------------------------------- |
-| **0**  | Fundamentos, arquitectura y gobernanza OSS                   | **Completada**                              | 2026-11-13   | `arena/604fae3a-cs2-aim` | `layer-0-done`                                                  |
-| **1**  | Esqueleto monorepo, tooling, CI multi-OS y línea base        | **Completada (pendiente check Windows/CI)** | 2026-11-13   | `arena/604fae3a-cs2-aim` | PR `feat(infra): layer 1 skeleton and tooling` / `layer-1-done` |
-| **2**  | Núcleo matemático, sensibilidad, FOV y PRNG                  | Pendiente                                   | —            | —                        | —                                                               |
-| **3**  | Persistencia SQLite + Drizzle, IPC y perfiles                | Pendiente                                   | —            | —                        | —                                                               |
-| **4**  | Motor 3D, input sub-frame e invarianza FPS (`4a/4b/4c`)      | Pendiente                                   | —            | —                        | —                                                               |
-| **5**  | Escenarios data-driven, spawners y bots                      | Pendiente                                   | —            | —                        | —                                                               |
-| **6**  | Armas CS2, dispersión y recoil (`6a/6b`)                     | Pendiente                                   | —            | —                        | —                                                               |
-| **7**  | Telemetría profunda y analítica explicativa                  | Pendiente                                   | —            | —                        | —                                                               |
-| **8**  | Rutinas y planificador adaptativo                            | Pendiente                                   | —            | —                        | —                                                               |
-| **9**  | Herramienta de calibración 360° y _Sensitivity Finder_       | Pendiente                                   | —            | —                        | —                                                               |
-| **10** | Módulo científico verificable (`10a/10b`)                    | Pendiente                                   | —            | —                        | —                                                               |
-| **11** | Ejercicios tácticos específicos de CS2 (`11a/11b`)           | Pendiente                                   | —            | —                        | —                                                               |
-| **12** | Benchmarks oficiales, progresión y gamificación honesta      | Pendiente                                   | —            | —                        | —                                                               |
-| **13** | UI/UX, onboarding 10 s, accesibilidad e i18n comunitario     | Pendiente                                   | —            | —                        | —                                                               |
-| **14** | Editor de escenarios, formato `.evoaim` y replays            | Pendiente                                   | —            | —                        | —                                                               |
-| **15** | Optimización por Tiers (L/M/H), memoria y latencia           | Pendiente                                   | —            | —                        | —                                                               |
-| **16** | Integraciones oficiales CS2 multiplataforma (`GSI` y `.cfg`) | Pendiente                                   | —            | —                        | —                                                               |
-| **17** | Empaquetado multi-OS, QA final, licencias y GitHub Releases  | Pendiente                                   | —            | —                        | —                                                               |
+| Capa    | Nombre                                                                          | Estado                                            | Fecha cierre | Rama                     | PR / Tag                                                                              |
+| ------- | ------------------------------------------------------------------------------- | ------------------------------------------------- | ------------ | ------------------------ | ------------------------------------------------------------------------------------- |
+| **0**   | Fundamentos, arquitectura y gobernanza OSS                                      | **Completada (en `main`)**                        | 2026-11-13   | `main` (`8dd50b2`)       | PR #1 / `layer-0-done`                                                                |
+| **0.1** | Adaptabilidad por diseño, fidelidad CS2 y licencia propuesta de datos           | **Completada en rama (pendiente merge PR)**       | 2026-11-13   | `arena/32dae8fb-cs2-aim` | PR `docs(docs): layer 0.1 adaptability, fidelity and data license` / `layer-0.1-done` |
+| **1**   | Esqueleto monorepo, tooling, CI multi-OS y línea base                           | **Completada (en `main`, CI verde Win + Ubuntu)** | 2026-11-13   | `main` (`8dd50b2`)       | PR #1 / `layer-1-done`                                                                |
+| **1.1** | Infraestructura de código de adaptabilidad (`PersonaFixture`, `forEachPersona`) | Pendiente                                         | —            | —                        | —                                                                                     |
+| **2**   | Núcleo matemático, sensibilidad, FOV y PRNG                                     | Pendiente                                         | —            | —                        | —                                                                                     |
+| **3**   | Persistencia SQLite + Drizzle, IPC y perfiles                                   | Pendiente                                         | —            | —                        | —                                                                                     |
+| **4**   | Motor 3D, input sub-frame e invarianza FPS (`4a/4b/4c`)                         | Pendiente                                         | —            | —                        | —                                                                                     |
+| **5**   | Escenarios data-driven, spawners y bots                                         | Pendiente                                         | —            | —                        | —                                                                                     |
+| **6**   | Armas CS2, dispersión y recoil (`6a/6b`)                                        | Pendiente                                         | —            | —                        | —                                                                                     |
+| **7**   | Telemetría profunda y analítica explicativa                                     | Pendiente                                         | —            | —                        | —                                                                                     |
+| **8**   | Rutinas y planificador adaptativo                                               | Pendiente                                         | —            | —                        | —                                                                                     |
+| **9**   | Herramienta de calibración 360° y _Sensitivity Finder_                          | Pendiente                                         | —            | —                        | —                                                                                     |
+| **10**  | Módulo científico verificable (`10a/10b`)                                       | Pendiente                                         | —            | —                        | —                                                                                     |
+| **11**  | Ejercicios tácticos específicos de CS2 (`11a/11b`)                              | Pendiente                                         | —            | —                        | —                                                                                     |
+| **12**  | Benchmarks oficiales, progresión y gamificación honesta                         | Pendiente                                         | —            | —                        | —                                                                                     |
+| **13**  | UI/UX, onboarding 10 s, accesibilidad e i18n comunitario                        | Pendiente                                         | —            | —                        | —                                                                                     |
+| **14**  | Editor de escenarios, formato `.evoaim` y replays                               | Pendiente                                         | —            | —                        | —                                                                                     |
+| **15**  | Optimización por Tiers (L/M/H), memoria y latencia                              | Pendiente                                         | —            | —                        | —                                                                                     |
+| **16**  | Integraciones oficiales CS2 multiplataforma (`GSI` y `.cfg`)                    | Pendiente                                         | —            | —                        | —                                                                                     |
+| **17**  | Empaquetado multi-OS, QA final, licencias y GitHub Releases                     | Pendiente                                         | —            | —                        | —                                                                                     |
 
 ---
 
 ## Checklist Detallada por Capa
 
-### Capa 0 — Fundamentos, Arquitectura y Gobernanza Open Source (`Completada`)
+### Capa 0 — Fundamentos, Arquitectura y Gobernanza Open Source (`Completada en main`)
 
-- **Fecha:** 2026-11-13 · **Rama:** `arena/604fae3a-cs2-aim` · **PR:** _Pendiente de abrir tras push_
+- **Fecha:** 2026-11-13 · **Commit en `main`:** `8dd50b2` · **PR:** #1
 - **Notas:** Ejecutada aplicando íntegramente el diseño fundacional más la Enmienda Obligatoria (`EVO-AIM-CS2`, licencia Apache-2.0, soporte multiplataforma Windows/Linux/macOS y escalabilidad de hardware Tiers L/M/H con invarianza FPS). Cero código de aplicación.
 - [x] Archivos raíz y gobernanza OSS (`README.md`, `AGENTS.md`, `LICENSE` Apache-2.0, `CODE_OF_CONDUCT.md`, `GOVERNANCE.md`, `SUPPORT.md`, `SECURITY.md`, `CONTRIBUTING.md` con DCO e IA, `THIRD_PARTY_NOTICES.md`, `.gitignore`, `.gitattributes`, `.editorconfig`).
 - [x] Plantillas y automatización declarativa de GitHub (`.github/PULL_REQUEST_TEMPLATE.md`, `ISSUE_TEMPLATE/{bug_report,feature_request,data_correction,config}.yml`, `CODEOWNERS`, `dependabot.yml`, `labels.yml`).
@@ -46,15 +49,31 @@
 - [x] Índice `docs/DECISIONS.md` y registro completo `ADR-0001` a `ADR-0014` en `docs/adr/`.
 - [x] Verificación de coherencia cruzada, diagramas Mermaid válidos y 0 coincidencias de nombres antiguos.
 
-### Capa 1 — Esqueleto del Monorepo, Tooling, CI Multi-OS y Línea Base (`Completada — verificación Windows/CI en VERIFY_ON_WINDOWS.md`)
+### Capa 0.1 — Adaptabilidad por Diseño, Fidelidad CS2 y Licencia Propuesta de Datos (`Completada en rama — solo documentación`)
 
-- **Fecha:** 2026-11-13 · **Rama:** `arena/604fae3a-cs2-aim` · **PR previsto:** `feat(infra): layer 1 skeleton and tooling` (`layer-1-done`)
+- **Fecha:** 2026-11-13 · **Rama:** `arena/32dae8fb-cs2-aim` · **PR previsto:** `docs(docs): layer 0.1 adaptability, fidelity and data license` (`layer-0.1-done`)
+- [x] Cierre de `ADR-0008` como `Accepted` (`Apache-2.0`) y registro de **`CC BY 4.0` como `PROPUESTA`** para `/packages/data` (`DT-03`) en `ADR-0014`, `docs/DATA_POLICY.md`, `docs/LEGAL.md` y `README.md` (texto legal de datos previsto para Capa 6).
+- [x] Nota explícita de trigonometría no bit-exacta (`Math.sin`/`Math.cos`/`Math.atan2` entre V8 de Node 22 y V8 de Electron `45.3.2`) consolidada en `ADR-0005`, `ADR-0016`, `docs/ARCHITECTURE.md` y `SPIKE-3` (`docs/RISKS_AND_SPIKES.md`).
+- [x] Creación de `ADR-0018` (4 reglas vinculantes `R1`–`R4`), `docs/PERSONAS_MATRIX.md` (`16` personas 100 % sintéticas `P01`..`P16` + tabla de cobertura por eje) y `docs/SUPPORTED_RANGES.md`.
+- [x] Creación de `ADR-0019` (`"Validated"` = medición reproducible), `docs/FIDELITY_SPEC.md` (`12` componentes con cada cifra de CS2 marcada `"por verificar"` + sección "Qué NO se replica") y `docs/TRAINER_PARITY.md` (`12` categorías con nombres propios `evo.*`).
+- [x] Incorporación de `QB-14`..`QB-19` en `docs/QUALITY_BARS.md`, procedimiento paso a paso y plantilla en `docs/DATA_POLICY.md`, diseño de `PersonaFixture` / `forEachPersona` en `docs/TESTING_STRATEGY.md`, casilla de matriz de personas en `.github/PULL_REQUEST_TEMPLATE.md` y criterios de adaptabilidad por capa en `docs/ROADMAP.md`.
+
+### Capa 1 — Esqueleto del Monorepo, Tooling, CI Multi-OS y Línea Base (`Completada en main — CI verde en Windows y Ubuntu`)
+
+- **Fecha:** 2026-11-13 · **Commit en `main`:** `8dd50b2` · **PR:** #1 (`layer-1-done`)
 - [x] Fase 0: migración de `appId` canónico a `io.github.evomaxpc.evoaim`, `0` ocurrencias de identificadores o nombres antiguos y cierre de `DT-04`.
 - [x] Inicializar `pnpm-workspace.yaml` (`pnpm@12.18.0`), `.nvmrc` (`22.22.3`), `tsconfig.base.json` estricto (TS `6.0.3`), `ADR-0015`..`0017` y paquetes `@evo-aim/{core,data,engine,ui,desktop}` con versiones exactas fijadas.
 - [x] Configurar ESLint 10 flat config type-aware (`no-explicit-any`, prohibición de `Math.random`/`Date.now` en `core`/`engine`, React Hooks), Prettier, `dependency-cruiser` (DAG + test de violación sintética), Husky + `lint-staged` + `commitlint`, Vitest multi-proyecto (`100 %` cobertura en `core`, `95.34 %` global) y Playwright (`e2e/app.spec.ts` parametrizado en `1280x720@1`, `1920x1080@1.5`, `3840x2160@2`, navegación por teclado y `prefers-reduced-motion`).
 - [x] Implementar `PlatformAdapter` (`win32`, `linux`, `darwin` con detección `x11`/`wayland`), logger JSONL estructurado con rotación y sanitización `<USER_HOME>`, ventana Electron endurecida (`sandbox: true`, `contextIsolation: true`, CSP estricta sin `unsafe-eval`/`unsafe-inline` + test estático de `0` `style=`, protocolo `app://evoaim` con anti-traversal, Fuses en `afterPack`, IPC validado con Zod) y shell React de 7 páginas en español (`strings.es.ts`) con escala `--text-scale`, media queries (`prefers-color-scheme`, `prefers-reduced-motion`, `forced-colors`) e indicadores visuales no dependientes solo del color.
 - [x] Implementar y testear `/tools/{check-licenses,check-dco,check-pr-title,baseline,check-no-owner-values}`, actualizar `THIRD_PARTY_NOTICES.md` con inventario real (`502` paquetes), documentar excepción `dev-only` de `pnpm audit` en `docs/RISKS_AND_SPIKES.md` y configurar `.github/workflows/ci.yml` fijado por SHA (`verify`, `dco-and-title`, `e2e`, `package-smoke`, `baseline`, `audit`).
-- [x] Ejecutar `SPIKE-4` en host Node (`better-sqlite3@13.1.1` `N-API v10` en memoria + canal `diag:nativeModules` + `asarUnpack`), publicar `docs/BASELINE.md` y documentar en `docs/VERIFY_ON_WINDOWS.md` las comprobaciones dependientes del binario Electron / Windows 10-11.
+- [x] Ejecutar `SPIKE-4` (`better-sqlite3@13.1.1` `N-API v10` + `asarUnpack` + CI verde en Windows y Ubuntu) y publicar `docs/BASELINE.md`. _(Seguimientos registrados sin bloqueo: mediciones físicas manuales en máquina Windows del propietario en `DT-01` / `BASELINE.md`, `signAndEditExecutable=false` pospuesto a Capa 17 y vigilancia de `minimatch` dev-only en `DT-05`)._
+
+### Capa 1.1 — Infraestructura de Código de Adaptabilidad (`Pendiente`)
+
+- **Fecha:** — · **Rama prevista:** `layer/01.1-adaptability-harness` · **PR:** —
+- [ ] Implementar `@evo-aim/core/testing` con el tipo `PersonaFixture`, las `16` personas sintéticas tipadas (`P01`..`P16`) y el helper `forEachPersona`.
+- [ ] Añadir test automatizado de cobertura de ejes de la matriz (`matrix-coverage.test.ts`, `QB-14`).
+- [ ] Parametrizar `e2e/app.spec.ts` por persona ortogonal y ampliar `tools/check-no-owner-values` (`QB-15`, `QB-16`).
 
 ### Capa 2 — Núcleo Matemático, Sensibilidad, FOV y PRNG (`Pendiente`)
 
@@ -88,7 +107,7 @@
 ### Capa 6 — Armas de CS2, Dispersión y Patrones de Recoil (`Pendiente`)
 
 - **Fecha:** — · **Rama prevista:** `layer/06a-weapons-core`, `layer/06b-recoil-patterns` · **PR:** —
-- [ ] Cerrar decisión formal de licencia de `/packages/data` (`CC BY 4.0` vs `CC0`, `ADR-0008`).
+- [ ] Confirmar decisión formal de licencia de `/packages/data` (`CC BY 4.0` registrada como **`PROPUESTA`** en `ADR-0014` y `docs/DATA_POLICY.md`, pendiente de confirmación del mantenedor en `DT-03`) e incorporar el texto completo de la licencia de datos junto con el contenido del paquete.
 - [ ] **Sub-capa `6a`:** modelo de cadencia, imprecisión base/movimiento y recuperación con `DataProvenance` completo.
 - [ ] **Sub-capa `6b`:** patrones de _recoil_ / _spray control_ verificados y entrenador interactivo de spray.
 
@@ -174,9 +193,11 @@
 
 ---
 
-## Registro de Deuda Técnica y Decisiones Abiertas
+## Registro de Deuda Técnica, Decisiones Abiertas y Seguimientos Post-Capa 1
 
-1. **`DT-01` (Propietario — Antes de Capa 1/4):** Completar las especificaciones de los equipos reales de referencia (`Tier L`, `Tier M`, `Tier H`) en `docs/HARDWARE_TIERS.md` y `docs/QUALITY_BARS.md`.
-2. **`DT-02` (Propietario — Antes de aceptar contribuciones externas):** Confirmar definitivamente la licencia `Apache-2.0` (`ADR-0008`) y rellenar el canal real de contacto de moderación en `CODE_OF_CONDUCT.md`.
-3. **`DT-03` (Propietario — Antes de Capa 6):** Decidir la licencia específica de los catálogos de `/packages/data` (`CC BY 4.0` vs `CC0 1.0`).
-4. ~~**`DT-04` (Infraestructura GitHub — Resuelta en Capa 1 Fase 0):**~~ Referencias documentales actualizadas al slug canónico `evo-aim-cs2` en `.github/ISSUE_TEMPLATE/config.yml` y `SECURITY.md`, y `appId` migrado a `io.github.evomaxpc.evoaim` (`ADR-0013`). _(Nota: confirmar en GitHub Settings si el remoto físico del propietario ya fue renombrado a `evo-aim-cs2`)._
+1. **`DT-01` (Propietario — Abierta, `2026-11-13`):** Completar las especificaciones de los equipos reales de referencia (`Tier L`, `Tier M`, `Tier H`) en `docs/HARDWARE_TIERS.md` / `docs/QUALITY_BARS.md` y registrar en `docs/BASELINE.md` las cifras físicas medidas en Windows real (`win-unpacked`, instalador NSIS, arranque en frío `QB-07` y RAM RSS en reposo `QB-08`/`QB-09`).
+2. **`DT-02` (Propietario — Abierta antes de abrir contribuciones externas, `2026-11-13`):** Sustituir el placeholder `[CONDUCT_CONTACT_PENDING]` en `CODE_OF_CONDUCT.md` por el correo o canal real de moderación del proyecto (`Apache-2.0` ya quedó confirmada como `Accepted` en `ADR-0008`).
+3. **`DT-03` (Propietario — Abierta antes de Capa 6, `2026-11-13`):** Confirmar explícitamente la propuesta **`CC BY 4.0`** (o elegir `CC0 1.0`) para los catálogos de `/packages/data` (`ADR-0014`, `docs/DATA_POLICY.md` §7) e incluir el texto completo de la licencia de datos al poblar `/packages/data` en la **Capa 6**.
+4. ~~**`DT-04` (Infraestructura GitHub — Resuelta, `2026-11-13`):**~~ Repositorio renombrado a `EvoMaxPC/evo-aim-cs2`, `appId` canónico `io.github.evomaxpc.evoaim` (`ADR-0013`) y 0 referencias al nombre antiguo.
+5. **`DT-05` (Infraestructura / Seguridad — Seguimiento activo `2026-11-13`):** Revisar periódicamente la excepción documentada de `minimatch` (`GHSA-g3hv-75wg-m249`, severidad moderada, `100 % dev-only` en `eslint`/`typescript-eslint`/`electron-builder`; véase `docs/RISKS_AND_SPIKES.md` §3) y retirarla en cuanto los paquetes upstream migren a `minimatch >= 11.0.1` sin usar `overrides` ciegos.
+6. **`DT-06` (Empaquetado Windows — Seguimiento para Capa 17, `2026-11-13`):** `win.signAndEditExecutable: false` en `apps/desktop/electron-builder.yml` omite temporalmente la incrustación de icono/metadatos PE en el `.exe` y la validación embebida ASAR firmada; se cerrará en la **Capa 17** junto con el icono propio libre de derechos y la estrategia de firma de releases (`R17`, `ADR-0017`).
