@@ -29,6 +29,7 @@ Marca con `[x]` cada punto verificado (o escribe `N/A` justificándolo si no apl
 - [ ] **Checks en verde:** `pnpm lint`, `pnpm typecheck` y `pnpm test` pasan sin errores ni supresiones injustificadas (cuando existan a partir de Capa 1).
 - [ ] **Probado/considerado en Windows y Linux (si aplica):** Todo acceso al SO pasa exclusivamente por `PlatformAdapter` y se han considerado diferencias de rutas/input entre Tier 1 (Windows) y Tier 2 (Linux).
 - [ ] **Quality Bars respetados:** No degrada la invarianza de aim respecto a FPS ni los presupuestos de `docs/QUALITY_BARS.md` (sin asignaciones en el hot path).
+- [ ] **Validado contra la matriz de personas (`docs/PERSONAS_MATRIX.md`) (o `N/A` justificado):** Se verificaron los extremos aplicables de `SUPPORTED_RANGES.md`, accesibilidad (`QB-15`) y cero supuestos del propietario (`QB-16`, `ADR-0018`).
 
 ### Datos y Documentación
 

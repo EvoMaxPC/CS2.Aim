@@ -87,3 +87,60 @@ Dado que en CI no hay mano humana moviendo un ratón físico de 8000 Hz:
 
 - `vitest bench` medirá el coste por operación de las funciones calientes (conversión de input, paso de simulación de 240 Hz, intersección de rayos, serialización post-run).
 - En la Capa 15 se añadirá un test automatizado de larga duración (soak test acotado en CI y completo de 10 min en pre-release) verificando ausencia de fugas de objetos Three.js (`renderer.info.memory.geometries` y `textures` constantes tras cargar y descargar escenarios 20 veces seguidas; `QB-08`).
+
+---
+
+## 7. Tests Parametrizados por Persona Sintética (`ADR-0018`, `QB-14`) — _Diseño para Capa 1.1_
+
+> **Alcance documental:** Esta sección especifica la arquitectura de pruebas de adaptabilidad que **se implementará en código en la Capa 1.1** (`@evo-aim/core/testing` + `e2e/`). En la Capa 0.1 no se modifica código fuente.
+
+### 7.1 Contrato `PersonaFixture` y Catálogo Inmutable
+
+En `@evo-aim/core/testing` (módulo auxiliar exclusivamente de pruebas, nunca empaquetado en el _hot path_ de producción) se definirá un tipo inmutable `PersonaFixture` que refleje fielmente las **16 personas sintéticas (`P01`..`P16`)** de [`docs/PERSONAS_MATRIX.md`](./PERSONAS_MATRIX.md):
+
+```text
+interface PersonaFixture {
+  readonly id: `P${string}`;                 // 'P01' .. 'P16'
+  readonly syntheticDisclaimer: 'SINTÉTICA, no representa a ningún usuario real';
+  readonly dpi: number;                      // [50, 64000] según SUPPORTED_RANGES.md
+  readonly sensitivity: number;              // [0.01, 20.00]
+  readonly pollingRateHz: 125 | 250 | 500 | 1000 | 2000 | 4000 | 8000;
+  readonly display: {
+    readonly width: number;
+    readonly height: number;
+    readonly refreshRateHz: number;
+    readonly aspectMode: '4:3-native' | '4:3-stretched' | '16:9' | '16:10' | '21:9';
+    readonly osScalePercent: 100 | 125 | 150 | 200 | 300;
+  };
+  readonly os: 'win32' | 'linux-wayland' | 'linux-x11' | 'darwin';
+  readonly hardwareTier: 'L' | 'L-software' | 'M' | 'H';
+  readonly distanceUnit: 'cm' | 'in';
+  readonly mousepadWidthCm?: number;
+  readonly keyboardLayout: 'QWERTY-ANSI' | 'QWERTY-ISO' | 'QWERTZ-ISO' | 'AZERTY-ISO';
+  readonly accessibility: {
+    readonly textScale: number;              // [0.85, 1.50]
+    readonly reducedMotion: boolean;
+    readonly forcedColors: boolean;
+    readonly colorVisionMode: 'normal' | 'deuteranopia' | 'protanopia' | 'tritanopia';
+    readonly keyboardOnlyUi: boolean;
+    readonly leftHandedMouse: boolean;
+  };
+  readonly declaredSkillPrior: 'beginner-zero' | 'unranked' | 'low' | 'mid' | 'high' | 'pro';
+}
+```
+
+### 7.2 Helper Parametrizado `forEachPersona`
+
+Para evitar repetir bucles manuales en cada suite de Vitest, `@evo-aim/core/testing` expondrá un envoltorio declarativo `forEachPersona(testFn)` compatible con `it.each`:
+
+- Ejecuta automáticamente la aserción recibida sobre las **16 personas (`P01`..`P16`)**, nombrando cada sub-caso con `[Pxx: resumen de ejes extremos]` para que cualquier fallo en CI señale al instante qué combinación de hardware/periférico/accesibilidad rompió la invariante.
+- En pruebas de `@evo-aim/core` y `@evo-aim/data` (rápidas en memoria, $< 1\text{ ms}$ por persona), **se ejecutan siempre las 16 personas completas**.
+- En pruebas E2E de ventana Electron con Playwright (`e2e/`), donde lanzar instancias completas tiene mayor coste temporal, un selector determinista `selectOrthogonalPersonas()` ejecuta el subconjunto mínimo que cubre todos los extremos visuales y de entrada (`P01` `720p@100 %` principiante, `P06` `4K@300 %` + `forced-colors` + `--text-scale: 1.5`, `P08` `reduced-motion` + tema claro, `P09` teclado-solo y `P10` `21:9` ultrawide), pudiendo correr la matriz íntegra en pre-release.
+
+### 7.3 Test Obligatorio de Cobertura de la Matriz (`matrix-coverage.test.ts`)
+
+Un test unitario dedicado en la Capa 1.1 auditará el propio array `SYNTHETIC_PERSONAS` verificando automáticamente que:
+
+1. Tiene tamaño **$\ge 14$** y todos los IDs son únicos.
+2. El 100 % de las entradas contiene literalmente `syntheticDisclaimer === 'SINTÉTICA, no representa a ningún usuario real'` y cae dentro de [`docs/SUPPORTED_RANGES.md`](./SUPPORTED_RANGES.md).
+3. Ningún extremo obligatorio queda huérfano si alguien edita la matriz en el futuro: presencia verificada de `DPI <= 400` y `>= 16 000`, `pollingRateHz === 125` y `8000`, `refreshRateHz === 60` y `360`, `4:3-native`, `4:3-stretched`, `16:9`, `16:10`, `21:9`, `osScalePercent === 100`, `150` y `300`, `win32`, `linux-wayland`, `linux-x11`, `darwin`, unidades `'cm'` e `'in'`, `AZERTY-ISO`, `hardwareTier === 'L'`, `'beginner-zero'`, daltonismo, `reducedMotion: true`, `forcedColors: true` y `keyboardOnlyUi: true`.
