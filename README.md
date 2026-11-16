@@ -33,7 +33,7 @@ Toda la arquitectura, especificaciones, estándares de calidad y hoja de ruta es
 | [`PROGRESS.md`](./PROGRESS.md)                             | Estado actual del proyecto, checklist por capas (0–17), spikes y deuda técnica                 |
 | [`docs/VISION.md`](./docs/VISION.md)                       | Visión de producto, principio Adaptativo por diseño, segmentos, historias y no-objetivos       |
 | [`docs/QUALITY_BARS.md`](./docs/QUALITY_BARS.md)           | Presupuestos medibles (`QB-01`..`QB-19`), invarianza FPS, adaptabilidad y fidelidad CS2        |
-| [`docs/PERSONAS_MATRIX.md`](./docs/PERSONAS_MATRIX.md)     | **Lectura clave:** 16 personas 100 % sintéticas (`P01`..`P16`) y cobertura de ejes extremos    |
+| [`docs/PERSONAS_MATRIX.md`](./docs/PERSONAS_MATRIX.md)     | **Lectura clave:** 20 personas 100 % sintéticas (`P01`..`P20`) y cobertura de ejes extremos    |
 | [`docs/SUPPORTED_RANGES.md`](./docs/SUPPORTED_RANGES.md)   | **Lectura clave:** rangos soportados por eje y degradación determinista fuera de rango         |
 | [`docs/FIDELITY_SPEC.md`](./docs/FIDELITY_SPEC.md)         | **Lectura clave:** matriz de fidelidad frente a CS2, estado `"por verificar"` y exclusiones    |
 | [`docs/TRAINER_PARITY.md`](./docs/TRAINER_PARITY.md)       | Taxonomía de 12 categorías de ejercicios con nombres propios `evo.*` y capa asociada           |

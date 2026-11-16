@@ -54,7 +54,7 @@
 - **Fecha:** 2026-11-13 · **Rama:** `arena/32dae8fb-cs2-aim` · **PR previsto:** `docs(docs): layer 0.1 adaptability, fidelity and data license` (`layer-0.1-done`)
 - [x] Cierre de `ADR-0008` como `Accepted` (`Apache-2.0`) y registro de **`CC BY 4.0` como `PROPUESTA`** para `/packages/data` (`DT-03`) en `ADR-0014`, `docs/DATA_POLICY.md`, `docs/LEGAL.md` y `README.md` (texto legal de datos previsto para Capa 6).
 - [x] Nota explícita de trigonometría no bit-exacta (`Math.sin`/`Math.cos`/`Math.atan2` entre V8 de Node 22 y V8 de Electron `45.3.2`) consolidada en `ADR-0005`, `ADR-0016`, `docs/ARCHITECTURE.md` y `SPIKE-3` (`docs/RISKS_AND_SPIKES.md`).
-- [x] Creación de `ADR-0018` (4 reglas vinculantes `R1`–`R4`), `docs/PERSONAS_MATRIX.md` (`16` personas 100 % sintéticas `P01`..`P16` + tabla de cobertura por eje) y `docs/SUPPORTED_RANGES.md`.
+- [x] Creación de `ADR-0018` (4 reglas vinculantes `R1`–`R4`), `docs/PERSONAS_MATRIX.md` (`20` personas 100 % sintéticas `P01`..`P20` + tabla de cobertura por eje) y `docs/SUPPORTED_RANGES.md`.
 - [x] Creación de `ADR-0019` (`"Validated"` = medición reproducible), `docs/FIDELITY_SPEC.md` (`12` componentes con cada cifra de CS2 marcada `"por verificar"` + sección "Qué NO se replica") y `docs/TRAINER_PARITY.md` (`12` categorías con nombres propios `evo.*`).
 - [x] Incorporación de `QB-14`..`QB-19` en `docs/QUALITY_BARS.md`, procedimiento paso a paso y plantilla en `docs/DATA_POLICY.md`, diseño de `PersonaFixture` / `forEachPersona` en `docs/TESTING_STRATEGY.md`, casilla de matriz de personas en `.github/PULL_REQUEST_TEMPLATE.md` y criterios de adaptabilidad por capa en `docs/ROADMAP.md`.
 
@@ -71,7 +71,7 @@
 ### Capa 1.1 — Infraestructura de Código de Adaptabilidad (`Pendiente`)
 
 - **Fecha:** — · **Rama prevista:** `layer/01.1-adaptability-harness` · **PR:** —
-- [ ] Implementar `@evo-aim/core/testing` con el tipo `PersonaFixture`, las `16` personas sintéticas tipadas (`P01`..`P16`) y el helper `forEachPersona`.
+- [ ] Implementar `@evo-aim/core/testing` con el tipo `PersonaFixture`, las `20` personas sintéticas tipadas (`P01`..`P20`) y el helper `forEachPersona`.
 - [ ] Añadir test automatizado de cobertura de ejes de la matriz (`matrix-coverage.test.ts`, `QB-14`).
 - [ ] Parametrizar `e2e/app.spec.ts` por persona ortogonal y ampliar `tools/check-no-owner-values` (`QB-15`, `QB-16`).
 
