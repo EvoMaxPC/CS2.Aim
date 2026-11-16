@@ -1,0 +1,84 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+@import 'tailwindcss';
+@source "../../../../packages/ui/src/**/*.{ts,tsx}";
+@source "./src/**/*.{ts,tsx}";
+
+@theme {
+  --color-surface-950: #090d16;
+  --color-surface-900: #101726;
+  --color-surface-800: #182235;
+  --color-surface-700: #22304a;
+  --color-border-subtle: #283652;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-accent-primary: #f59e0b;
+  --color-accent-hover: #fbbf24;
+  --color-accent-muted: #2a2112;
+  --color-accent-border: #785113;
+  --color-status-ok: #22c55e;
+  --color-status-err: #ef4444;
+
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Mono', ui-monospace, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+
+  --spacing: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+:root {
+  --text-scale: 1;
+  --space-unit: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  color-scheme: dark;
+  font-size: calc(1rem * var(--text-scale));
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Competitive CS2 dark-first surface palette preserved across OS schemes; full user theme selector arrives in Layer 13 */
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --color-border-subtle: CanvasText;
+    --color-accent-border: Highlight;
+  }
+
+  a[aria-current='page'],
+  button,
+  section {
+    forced-color-adjust: auto;
+    border-color: CanvasText;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 0.125rem solid Highlight;
+    outline-offset: 0.125rem;
+  }
+}

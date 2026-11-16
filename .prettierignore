@@ -1,0 +1,9 @@
+node_modules/
+dist/
+out/
+release/
+coverage/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+tools/deps-check/fixtures/

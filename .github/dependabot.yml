@@ -1,0 +1,33 @@
+# Dependabot configuration for EVO-AIM-CS2
+# SPDX-License-Identifier: Apache-2.0
+# Note: In Layer 0 no package.json or GitHub Actions workflows exist yet;
+# GitHub Actions and npm/pnpm checks will become active starting in Layer 1.
+
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'UTC'
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: 'chore(infra)'
+      include: 'scope'
+    labels:
+      - 'area:infra'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'UTC'
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'ci(infra)'
+    labels:
+      - 'area:infra'

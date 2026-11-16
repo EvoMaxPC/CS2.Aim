@@ -1,0 +1,59 @@
+name: Data Correction / Source Verification
+description: Corregir o aportar verificación con fuente para fórmulas, datos de armas de CS2 o estudios científicos
+title: '[Data]: '
+labels: ['type:data', 'area:data', 'needs-verification']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        En **EVO-AIM-CS2** rige `docs/DATA_POLICY.md`: ningún dato técnico o científico se acepta sin una fuente verificable y reproducible. Usa esta plantilla para corregir un dato erróneo, verificar un registro marcado como `verified: false` o proponer una referencia nueva.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Categoría del dato
+      options:
+        - Estadística de arma de CS2 (RPM, daño, velocidad, imprecisión, zoom)
+        - Patrón de recoil / spray control de CS2
+        - Fórmula matemática (sensibilidad, FOV, conversión, métricas)
+        - Estudio científico / literatura revisada por pares (DOI obligatorio)
+        - Dato de soporte de plataforma / Electron / OS
+    validations:
+      required: true
+
+  - type: input
+    id: target_item
+    attributes:
+      label: Archivo, ID de registro o documento afectado
+      description: 'Ejemplo: docs/GLOSSARY.md (fórmula zoom), arma ak47 en @evo-aim/data, estudio fitts-1954, etc.'
+      placeholder: 'docs/GLOSSARY.md — sección sensibilidad con zoom'
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_vs_expected
+    attributes:
+      label: Valor actual vs. Valor propuesto
+      description: Indica claramente qué dice actualmente el repositorio y cuál es el valor exacto correcto (incluyendo unidades explícitas).
+    validations:
+      required: true
+
+  - type: textarea
+    id: verifiable_source
+    attributes:
+      label: Fuente primaria verificable (OBLIGATORIO)
+      description: Incluye DOI, URL oficial, versión/parche exacto de CS2 y procedimiento paso a paso para reproducir la medición. No se aceptan respuestas de IA sin fuente primaria ni wikis sin referencia trazable.
+      placeholder: |
+        - Fuente / URL / DOI:
+        - Versión de CS2 / Fecha de consulta (ISO 8601):
+        - Método de reproducción (comandos de consola, script de medición, etc.):
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: copyright_check
+    attributes:
+      label: Declaración de limpieza legal (`DATA_POLICY.md` y `LEGAL.md`)
+      options:
+        - label: Confirmo que los datos aportados son hechos fácticos/mediciones o referencias bibliográficas citadas, y NO incluyen archivos binarios ni assets extraídos con copyright de terceros.
+          required: true

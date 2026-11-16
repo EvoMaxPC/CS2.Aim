@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "description": "Bot accounts exempted from DCO Signed-off-by requirement (ADR-0014).",
+  "allowedBotEmails": [
+    "49699333+dependabot[bot]@users.noreply.github.com",
+    "298482267+arena-ai-coding-agent[bot]@users.noreply.github.com"
+  ],
+  "allowedBotNames": ["dependabot[bot]", "arena-ai-coding-agent[bot]"]
+}

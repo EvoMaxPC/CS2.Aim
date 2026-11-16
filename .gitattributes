@@ -1,0 +1,53 @@
+# Git attributes for EVO-AIM-CS2
+# Force LF line endings across Windows, Linux, and macOS checkouts
+
+* text=auto eol=lf
+
+# Source code & documentation
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.cjs text eol=lf
+*.json text eol=lf
+*.jsonc text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.sql text eol=lf
+*.svg text eol=lf
+*.sh text eol=lf
+
+# Windows scripts explicitly require CRLF if ever added in tools/
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files (prevent Git from corrupting or diffing as text)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.icns binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.ogg binary
+*.wav binary
+*.mp3 binary
+*.flac binary
+*.glb binary
+*.gltf binary
+*.bin binary
+*.sqlite binary
+*.db binary
+*.gz binary
+*.zip binary
+*.exe binary
+*.AppImage binary
+*.deb binary
+*.dmg binary

@@ -1,0 +1,29 @@
+{
+  "name": "@evo-aim/desktop",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "main": "./out/main/index.cjs",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.web.json --noEmit",
+    "test": "vitest run --project desktop-main --project desktop-renderer",
+    "package": "electron-vite build && electron-builder --dir --config electron-builder.yml",
+    "package:installer": "electron-vite build && electron-builder --config electron-builder.yml"
+  },
+  "dependencies": {
+    "@evo-aim/core": "workspace:*",
+    "@evo-aim/data": "workspace:*",
+    "@evo-aim/engine": "workspace:*",
+    "@evo-aim/ui": "workspace:*",
+    "better-sqlite3": "13.1.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-router-dom": "7.18.5",
+    "zod": "4.6.7",
+    "zustand": "5.1.0"
+  }
+}

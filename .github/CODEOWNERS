@@ -1,0 +1,8 @@
+# CODEOWNERS for EVO-AIM-CS2
+# Placeholder with the primary repository owner / Lead Maintainer (see GOVERNANCE.md)
+
+* @EvoMaxPC
+/docs/ @EvoMaxPC
+/.github/ @EvoMaxPC
+/LICENSE @EvoMaxPC
+/SECURITY.md @EvoMaxPC

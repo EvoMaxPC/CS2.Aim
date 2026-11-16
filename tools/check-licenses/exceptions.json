@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "description": "Reviewed license exceptions for EVO-AIM-CS2 (ADR-0014). MPL-2.0 or non-standard SPDX expressions require explicit human/architect review without modifying covered files.",
+  "reviewedPackages": [
+    {
+      "name": "lightningcss",
+      "license": "MPL-2.0",
+      "reason": "Build-time CSS compiler transitive dependency of @tailwindcss/vite@4.3.5; unmodified devDependency not shipped in runtime application binaries (ADR-0014)."
+    },
+    {
+      "name": "lightningcss-linux-x64-gnu",
+      "license": "MPL-2.0",
+      "reason": "Platform-specific build-time binary for lightningcss; unmodified devDependency not shipped in runtime application binaries (ADR-0014)."
+    },
+    {
+      "name": "lightningcss-win32-x64-msvc",
+      "license": "MPL-2.0",
+      "reason": "Platform-specific build-time binary for lightningcss on Windows runners; unmodified devDependency not shipped in runtime application binaries (ADR-0014)."
+    },
+    {
+      "name": "lightningcss-darwin-arm64",
+      "license": "MPL-2.0",
+      "reason": "Platform-specific build-time binary for lightningcss on macOS arm64; unmodified devDependency not shipped in runtime application binaries (ADR-0014)."
+    },
+    {
+      "name": "lightningcss-darwin-x64",
+      "license": "MPL-2.0",
+      "reason": "Platform-specific build-time binary for lightningcss on macOS x64; unmodified devDependency not shipped in runtime application binaries (ADR-0014)."
+    }
+  ]
+}
