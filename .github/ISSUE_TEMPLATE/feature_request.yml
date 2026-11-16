@@ -1,0 +1,54 @@
+name: Feature Request
+description: Proponer una mejora o nueva funcionalidad alineada con la visión de EVO-AIM-CS2
+title: '[Feat]: '
+labels: ['type:feature']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de abrir una propuesta, revisa `docs/VISION.md` (especialmente los **No-objetivos**) y `docs/ROADMAP.md` para comprobar si ya está planificada en alguna capa (0–17).
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema o necesidad de entrenamiento en CS2
+      description: ¿Qué problema real de mejora en Counter-Strike 2 o de experiencia de uso resuelve esta propuesta?
+      placeholder: Cuando entreno micro-ajustes con rifles necesito...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solución propuesta
+      description: Describe cómo debería funcionar de manera concreta y medible.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: target_area
+    attributes:
+      label: Área principal afectada
+      options:
+        - '@evo-aim/core (matemáticas, sensibilidad, métricas)'
+        - '@evo-aim/data (armas, escenarios, estudios científicos)'
+        - '@evo-aim/engine (motor 3D, input, audio, rendimiento)'
+        - '@evo-aim/ui (interfaz, gráficas, accesibilidad, i18n)'
+        - '@evo-aim/desktop / platform (integración SO, GSI, instaladores)'
+        - 'Documentación / Infraestructura'
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas y riesgos
+      description: ¿Impacta en rendimiento para equipos de gama baja (Tier L) o en soporte multiplataforma (Windows/Linux)?
+
+  - type: checkboxes
+    id: alignment
+    attributes:
+      label: Confirmación de alcance y políticas
+      options:
+        - label: He verificado que esta propuesta NO viola los límites legales/anti-cheat de `docs/LEGAL.md` (no lee memoria de CS2, no automatiza acciones dentro del juego ni usa assets con copyright de Valve).
+          required: true

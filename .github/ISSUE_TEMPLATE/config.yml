@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Reportar vulnerabilidad de seguridad (Privado)
+    url: https://github.com/EvoMaxPC/evo-aim-cs2/security/advisories/new
+    about: Usa GitHub Private Vulnerability Reporting para fallos de seguridad (nunca abras un issue público).
+  - name: Documentación y Arquitectura (/docs)
+    url: https://github.com/EvoMaxPC/evo-aim-cs2/tree/main/docs
+    about: Consulta VISION, ARCHITECTURE, QUALITY_BARS, PLATFORM_SUPPORT y DATA_POLICY antes de abrir un issue.

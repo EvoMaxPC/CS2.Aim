@@ -1,0 +1,89 @@
+# Ignore patterns for EVO-AIM-CS2
+# SPDX-License-Identifier: Apache-2.0
+
+# Dependencies
+node_modules/
+.pnpm-store/
+.npm/
+
+# Build, bundle & packaging outputs
+dist/
+out/
+build/
+release/
+*.tsbuildinfo
+
+# Testing & coverage
+coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+.vitest/
+
+# Local databases, user profiles & exchange files generated in dev
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+user-data-dev/
+
+# Environment variables & secrets (NEVER commit secrets or personal paths)
+.env
+.env.*
+!.env.example
+
+# Certificates & code signing keys
+*.pfx
+*.p12
+*.key
+*.pem
+*.cer
+*.crt
+
+# Logs & crash dumps
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.dmp
+
+# Caches & temporary tooling directories
+.cache/
+.vite/
+.turbo/
+.eslintcache
+.stylelintcache
+tmp/
+temp/
+
+# IDEs & editors
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS-generated files (Windows, Linux, macOS)
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+*~
+.directory
+.Trash-*
