@@ -57,7 +57,7 @@ Además, EVO-AIM-CS2 recomienda suspender automáticamente su escena 3D activa s
 ## 4. Licenciamiento de Código, Datos y Dependencias (`ADR-0008`, `ADR-0014`)
 
 1. **Código fuente:** licenciado bajo **Apache License 2.0** ([`LICENSE`](../LICENSE)), titularidad colectiva `"EVO-AIM-CS2 contributors"`, con contribuciones certificadas mediante **DCO 1.1** (`Signed-off-by`).
-2. **Catálogos de datos (`/packages/data`):** la licencia específica para las colecciones estructuradas de datos, escenarios y fichas científicas se encuentra **PENDIENTE de decisión formal antes de la Capa 6** (candidatas evaluadas en `ADR-0008`: **CC BY 4.0** o **CC0 1.0**).
+2. **Catálogos de datos (`/packages/data`):** se registra **`CC BY 4.0` (Creative Commons Attribution 4.0 International)** con estado **`PROPUESTA`**, pendiente de confirmación explícita del mantenedor (`DT-03`, `ADR-0014`, `docs/DATA_POLICY.md`) antes de la **Capa 6** (alternativa: `CC0 1.0`). El código ejecutable permanece bajo `Apache-2.0` y el texto íntegro de la licencia de datos se incorporará junto con los catálogos de `/packages/data` en la **Capa 6** (actualmente `/packages/data` es solo un esqueleto).
 3. **Dependencias de terceros:** únicamente licencias permisivas compatibles con Apache-2.0 (`MIT`, `BSD`, `ISC`, `Apache-2.0`, `OFL-1.1`, `CC0`/`CC-BY-4.0` con atribución). Prohibidas dependencias `GPL`, `AGPL` o `SSPL`. Todas las atribuciones requeridas por la cláusula 4 de Apache-2.0 y licencias de terceros se consolidarán en [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) en la Capa 17.
 
 ---
