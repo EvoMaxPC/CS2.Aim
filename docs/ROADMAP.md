@@ -33,7 +33,7 @@
 - **Objetivo:** Cerrar los contratos documentales de adaptabilidad universal (cero acoplamiento a valores personales del propietario), fidelidad verificable frente a CS2, paridad taxonómica con entrenadores de puntería y propuesta formal de licencia para `/packages/data` antes de escribir la lógica de dominio.
 - **Entregables:**
   - `ADR-0018` (Adaptabilidad por Diseño: reglas vinculantes `R1`–`R4`) y `ADR-0019` (`"Validated"` exige medición reproducible con método, datos, fecha, build de CS2 y autor).
-  - [`docs/PERSONAS_MATRIX.md`](./PERSONAS_MATRIX.md) (`20` personas 100 % sintéticas `P01`..`P20` cubriendo todos los extremos) y [`docs/SUPPORTED_RANGES.md`](./SUPPORTED_RANGES.md) (rangos soportados y degradación fuera de rango).
+  - [`docs/PERSONAS_MATRIX.md`](./PERSONAS_MATRIX.md) (`21` personas 100 % sintéticas `P01`..`P21` cubriendo todos los extremos) y [`docs/SUPPORTED_RANGES.md`](./SUPPORTED_RANGES.md) (rangos soportados y degradación fuera de rango).
   - [`docs/FIDELITY_SPEC.md`](./FIDELITY_SPEC.md) (matriz de 12 componentes con cada cifra de CS2 marcada `"por verificar"` y sección explícita de qué NO se replica) y [`docs/TRAINER_PARITY.md`](./TRAINER_PARITY.md) (12 categorías con nombres propios `evo.*`).
   - Ampliación de [`docs/QUALITY_BARS.md`](./QUALITY_BARS.md) con `QB-14`..`QB-19`, procedimiento paso a paso y plantilla de medición reproducible en [`docs/DATA_POLICY.md`](./DATA_POLICY.md), registro de `CC BY 4.0` como `PROPUESTA` para `/packages/data` (`DT-03`) en `ADR-0014`/`DATA_POLICY.md`, cierre de estado `Accepted` en `ADR-0008`, diseño de `PersonaFixture` en [`docs/TESTING_STRATEGY.md`](./TESTING_STRATEGY.md) y casilla de personas en `.github/PULL_REQUEST_TEMPLATE.md`.
 - **Dependencias:** Capa 0 y Capa 1 fusionadas en `main`.
@@ -64,7 +64,7 @@
 
 - **Objetivo:** Materializar en código ejecutable y tests automatizados las reglas vinculantes de `ADR-0018`, `PERSONAS_MATRIX.md` y `SUPPORTED_RANGES.md` antes de construir el núcleo matemático de la Capa 2.
 - **Entregables:**
-  - Sub-módulo `@evo-aim/core/testing` exportando el tipo `PersonaFixture`, el catálogo tipado inmutable de las `20` personas sintéticas (`P01`..`P20`) y el helper parametrizado `forEachPersona(...)` (`TESTING_STRATEGY.md` §7).
+  - Sub-módulo `@evo-aim/core/testing` exportando el tipo `PersonaFixture`, el catálogo tipado inmutable de las `21` personas sintéticas (`P01`..`P21`) y el helper parametrizado `forEachPersona(...)` (`TESTING_STRATEGY.md` §7).
   - Test automatizado de cobertura de ejes de la matriz (`matrix-coverage.test.ts`), garantizando que ninguna edición futura deje sin cubrir algún extremo obligatorio (`QB-14`).
   - Parametrización del suite E2E de Playwright (`e2e/app.spec.ts`) usando el subconjunto ortogonal de personas sintéticas (incluyendo `forced-colors`, `--text-scale`, `reduced-motion`, teclado-solo y relaciones de aspecto extremas; `QB-15`).
   - Ampliación de `tools/check-no-owner-values` para reforzar la detección de literales de configuración acoplados fuera de fixtures sintéticos autorizados (`QB-16`).
@@ -86,7 +86,7 @@
 - **Dependencias:** Capa 1.1.
 - **Riesgos principales:** `R5` (fórmulas zoom/FOV CS2), `R9` (determinismo IEEE-754 cross-OS).
 - **Criterios de aceptación (DoD):** Cobertura $\ge 95\%$ en `@evo-aim/core` con tests unitarios de tabla de referencia independiente y _property-based tests_ (`fast-check`); 0 imports de DOM/Node; `SPIKE-3` (fase matemática) en verde.
-- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** `forEachPersona` valida las 20 personas (`P01`..`P20`) de `PERSONAS_MATRIX.md` sobre `eDPI`, `cm/360` / `in/360`, `countsPer360` y `Hor+ FOV` (`4:3` nativo/estirado a `32:9`), devolviendo `Result` claro fuera de `SUPPORTED_RANGES.md`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** `forEachPersona` valida las 21 personas (`P01`..`P21`) de `PERSONAS_MATRIX.md` sobre `eDPI`, `cm/360` / `in/360`, `countsPer360` y `Hor+ FOV` (`5:4` y `4:3` nativo/estirado a `32:9`), devolviendo `Result` claro fuera de `SUPPORTED_RANGES.md`.
 - **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Componentes `#1`, `#2` (base), `#3` y `#5` (intersección analítica) de `FIDELITY_SPEC.md`.
 - **Validación de `QUALITY_BARS`:** Base matemática de `QB-01`, `QB-05`, `QB-11`, `QB-13`, `QB-14`, `QB-17`.
 
@@ -119,7 +119,7 @@
 - **Dependencias:** Capa 2, Capa 3.
 - **Riesgos principales:** `R1`, `R2`, `R3`, `R8`, `R9`, `R12`, `R13`.
 - **Criterios de aceptación (DoD):** `SPIKE-1/2/3/5/6` aprobados (o activación documentada de Plan B si alguno fallase); escena jugable de tiro básico a 60–360 Hz cumpliendo `QB-01`, `QB-02`, `QB-04`, `QB-05`, `QB-06`, `QB-08`; primer tag `v0.1.0`.
-- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** El bucle de input/render soporta desde `P01`/`P16` (`125 Hz` ratón, `60 Hz` pantalla, `Tier L` / fallback software) hasta `P04` (`8000 Hz`, `360 Hz`) y `P17` (`5120x1440` `32:9`), respeta escalados `100 %`–`300 %`, modos `4:3` estirado/barras negras a `32:9`, mano izquierda (`P15`), conmutación _toggle_ (`P18`), degradación `aria-live` sin atrapar foco para lectores de pantalla (`P19`) y binding por código físico (`AZERTY` `P05`).
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** El bucle de input/render soporta desde `P01`/`P16`/`P21` (`125–500 Hz` ratón, `60 Hz` pantalla, `Tier L` / fallback software, `5:4`) hasta `P04` (`8000 Hz`, `360 Hz`) y `P17` (`5120x1440` `32:9`), respeta escalados `100 %`–`300 %`, modos `5:4` y `4:3` estirado/barras negras a `32:9`, mano izquierda (`P15`), conmutación _toggle_ (`P18`), degradación `aria-live` sin atrapar foco para lectores de pantalla (`P19`) y binding por código físico (`AZERTY` `P05`).
 - **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Componentes `#1`, `#3`, `#4` (retícula base), `#9`, `#11` y `#12` de `FIDELITY_SPEC.md`.
 - **Validación de `QUALITY_BARS`:** `QB-01`, `QB-02`, `QB-03`, `QB-04`, `QB-05`, `QB-06`, `QB-08`, `QB-14`, `QB-17`.
 
@@ -255,7 +255,7 @@
 - **Dependencias:** Capas 4–12.
 - **Riesgos principales:** Sobrecarga de UI que afecte tiempos de carga (`QB-07`).
 - **Criterios de aceptación (DoD):** 100 % de cadenas externalizadas en `es` y `en`; validador automático de catálogos i18n en CI; test E2E completo del onboarding en Windows y Linux.
-- **Criterio de adaptabilidad (`ADR-0018` R4, `QB-14`, `QB-15`):** Superación íntegra de E2E en los perfiles visuales/accesibles extremos de `PERSONAS_MATRIX.md` (`P01` `720p`, `P05` `AZERTY`, `P06` `4K@300 %` + `forced-colors` + `--text-scale: 1.5`, `P07`/`P10` daltonismo, `P08` `reduced-motion`, `P09` teclado-solo, `P16` software fallback, `P17` `5120x1440` `32:9`, `P18` motricidad fina reducida sin límites de tiempo y `P19` lector de pantalla `NVDA`/`Narrator`/`VoiceOver`/`Orca`).
+- **Criterio de adaptabilidad (`ADR-0018` R4, `QB-14`, `QB-15`):** Superación íntegra de E2E en los perfiles visuales/accesibles extremos de `PERSONAS_MATRIX.md` (`P01` `720p`, `P05` `AZERTY`, `P06` `4K@300 %` + `forced-colors` + `--text-scale: 1.50`, `P07`/`P10`/`P21` daltonismo, `P08` `reduced-motion`, `P09` teclado-solo, `P16` software fallback, `P17` `5120x1440` `32:9`, `P18` motricidad fina reducida sin límites de tiempo, `P19` lector de pantalla `NVDA`/`Narrator`/`VoiceOver`/`Orca` y `P21` `1280x1024` `5:4` + `--text-scale: 0.85`).
 - **Validación de `QUALITY_BARS`:** `QB-07`, `QB-11`, `QB-14`, `QB-15`.
 
 ---
@@ -270,7 +270,7 @@
 - **Dependencias:** Capa 4, Capa 5, Capa 7.
 - **Riesgos principales:** Vectores de seguridad al importar `.evoaim` maliciosos, divergencia de replays entre versiones (`R9`).
 - **Criterios de aceptación (DoD):** Suite de fuzzing de seguridad contra el parser `.evoaim` superada; reproducción exacta de replays verificada en Windows y Linux.
-- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`, `QB-15`):** Los controles del reproductor de replays y del editor son operables con teclado y lector de pantalla (`P09`, `P19`), imponen cotas de entidades aptas para `Tier L` (`P01`, `P16`) y reproducen con fidelidad replays grabados en cualquier persona/relación de aspecto (`4:3` a `32:9`).
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`, `QB-15`):** Los controles del reproductor de replays y del editor son operables con teclado y lector de pantalla (`P09`, `P19`), imponen cotas de entidades aptas para `Tier L` (`P01`, `P16`, `P21`) y reproducen con fidelidad replays grabados en cualquier persona/relación de aspecto (`5:4` a `32:9`).
 - **Validación de `QUALITY_BARS`:** `QB-05`, `QB-12`, `QB-14`, `QB-15`.
 
 ---
@@ -284,7 +284,7 @@
 - **Dependencias:** Capas 4–14.
 - **Riesgos principales:** `R1`, `R8`, `R12` en equipos integrados Tier L.
 - **Criterios de aceptación (DoD):** Cumplimiento verificado y documentado de `QB-04`, `QB-07`, `QB-08` y `QB-09` en equipos de referencia disponibles.
-- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** Validación de rendimiento y ausencia de regresiones de latencia/memoria en los extremos de hardware y monitor de la matriz (`P01`/`P16` `Tier L` `60 Hz`, `P06` `4K@300 %`, `P10` `3440x1440` Linux Wayland, `P17` `5120x1440` `32:9` y `P04` `360 Hz` + `8000 Hz`).
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** Validación de rendimiento y ausencia de regresiones de latencia/memoria en los extremos de hardware y monitor de la matriz (`P01`/`P16`/`P21` `Tier L` `60 Hz`, `P06` `4K@300 %`, `P10` `3440x1440` Linux Wayland, `P17` `5120x1440` `32:9` y `P04` `360 Hz` + `8000 Hz`).
 - **Validación de `QUALITY_BARS`:** Validación final de `QB-04`, `QB-07`, `QB-08`, `QB-09`, `QB-14`.
 
 ---

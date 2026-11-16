@@ -16,7 +16,7 @@ Antes de modificar cualquier archivo, instalar paquetes o proponer código, **to
 3. [`/docs/CONVENTIONS.md`](./docs/CONVENTIONS.md) — reglas TypeScript strict, unidades explícitas, hot path, identificadores del proyecto, DCO e higiene de repo público.
 4. [`/docs/QUALITY_BARS.md`](./docs/QUALITY_BARS.md) — presupuestos no funcionales (`QB-01`..`QB-19`) que el cambio no puede degradar.
 5. [`/docs/DATA_POLICY.md`](./docs/DATA_POLICY.md) — política de fuentes, procedimiento de medición reproducible (`ADR-0019`) y licencia propuesta de datos (`DT-03`).
-6. [`/docs/PERSONAS_MATRIX.md`](./docs/PERSONAS_MATRIX.md) y [`/docs/SUPPORTED_RANGES.md`](./docs/SUPPORTED_RANGES.md) — matriz de 20 personas sintéticas (`P01`..`P20`), rangos soportados y reglas vinculantes de adaptabilidad (`ADR-0018`).
+6. [`/docs/PERSONAS_MATRIX.md`](./docs/PERSONAS_MATRIX.md) y [`/docs/SUPPORTED_RANGES.md`](./docs/SUPPORTED_RANGES.md) — matriz de 21 personas sintéticas (`P01`..`P21`), rangos soportados y reglas vinculantes de adaptabilidad (`ADR-0018`).
 7. [`/docs/FIDELITY_SPEC.md`](./docs/FIDELITY_SPEC.md) — qué mecánicas de CS2 se replican, qué es aproximación propia, qué está `"por verificar"` y qué NO se replica jamás.
 
 Si la tarea toca sistemas operativos o rendimiento gráfico, lee también [`/docs/PLATFORM_SUPPORT.md`](./docs/PLATFORM_SUPPORT.md) y [`/docs/HARDWARE_TIERS.md`](./docs/HARDWARE_TIERS.md).

@@ -96,11 +96,11 @@ Dado que en CI no hay mano humana moviendo un ratón físico de 8000 Hz:
 
 ### 7.1 Contrato `PersonaFixture` y Catálogo Inmutable
 
-En `@evo-aim/core/testing` (módulo auxiliar exclusivamente de pruebas, nunca empaquetado en el _hot path_ de producción) se definirá un tipo inmutable `PersonaFixture` que refleje fielmente las **20 personas sintéticas (`P01`..`P20`)** de [`docs/PERSONAS_MATRIX.md`](./PERSONAS_MATRIX.md):
+En `@evo-aim/core/testing` (módulo auxiliar exclusivamente de pruebas, nunca empaquetado en el _hot path_ de producción) se definirá un tipo inmutable `PersonaFixture` que refleje fielmente las **21 personas sintéticas (`P01`..`P21`)** de [`docs/PERSONAS_MATRIX.md`](./PERSONAS_MATRIX.md):
 
 ```text
 interface PersonaFixture {
-  readonly id: `P${string}`;                 // 'P01' .. 'P20'
+  readonly id: `P${string}`;                 // 'P01' .. 'P21'
   readonly syntheticDisclaimer: 'SINTÉTICA, no representa a ningún usuario real';
   readonly dpi: number;                      // [50, 64000] según SUPPORTED_RANGES.md
   readonly sensitivity: number;              // [0.01, 20.00]
@@ -109,11 +109,12 @@ interface PersonaFixture {
     readonly width: number;
     readonly height: number;
     readonly refreshRateHz: number;
-    readonly aspectMode: '4:3-native' | '4:3-stretched' | '16:9' | '16:10' | '21:9' | '32:9';
+    readonly aspectMode: '5:4-native' | '4:3-native' | '4:3-stretched' | '16:9' | '16:10' | '21:9' | '32:9';
     readonly osScalePercent: 100 | 125 | 150 | 200 | 300;
   };
-  readonly os: 'win32' | 'linux-wayland' | 'linux-x11' | 'darwin';
-  readonly hardwareTier: 'L' | 'L-software' | 'M' | 'H';
+  readonly os: 'win32' | 'linux-wayland' | 'linux-x11' | 'darwin'; // 1 SO principal por ficha
+  readonly hardwareTier: 'L' | 'M' | 'H';
+  readonly renderMode: 'hardware-webgl2' | 'software-fallback';    // separa tier físico de modo render (P16)
   readonly distanceUnit: 'cm' | 'in';
   readonly mousepadWidthCm?: number;
   readonly keyboardLayout: 'QWERTY-ANSI' | 'QWERTY-ISO' | 'QWERTZ-ISO' | 'AZERTY-ISO';
@@ -123,7 +124,12 @@ interface PersonaFixture {
     readonly forcedColors: boolean;
     readonly colorVisionMode: 'normal' | 'deuteranopia' | 'protanopia' | 'tritanopia';
     readonly keyboardOnlyUi: boolean;
-    readonly screenReaderMode: boolean;      // P19 (NVDA/Narrator, VoiceOver, Orca)
+    readonly screenReaderMode: boolean;      // P19
+    readonly screenReadersByOs?: {           // P19: parametrización multi-OS en Capa 1.1
+      readonly win32?: readonly ('NVDA' | 'Narrator')[];
+      readonly linux?: readonly ('Orca')[];
+      readonly darwin?: readonly ('VoiceOver')[];
+    };
     readonly reducedFineMotor: boolean;      // P18 (temblor / motricidad fina reducida)
     readonly leftHandedMouse: boolean;
   };
@@ -132,18 +138,21 @@ interface PersonaFixture {
 }
 ```
 
+- **Nota de modelado multi-OS para `P19` (un único `os` principal por ficha):** cada `PersonaFixture` mantiene exactamente **un sistema operativo principal** (`os: 'win32'` en la ficha base de `P19`) para conservar cardinalidad determinista 1:1 con las 21 filas de `PERSONAS_MATRIX.md`, mientras que `accessibility.screenReadersByOs` enumera los lectores soportados por plataforma (`win32`: `['NVDA', 'Narrator']`, `linux`: `['Orca']`, `darwin`: `['VoiceOver']`). En la **Capa 1.1**, los tests de semántica ARIA / plataforma expandirán `P19` mediante un helper secundario `expandPersonaAcrossScreenReaderPlatforms(P19)` cuando la aserción dependa del adaptador de SO.
+- **Nota de modelado de hardware vs. renderizador para `P16`:** el nivel físico de máquina (`hardwareTier: 'L' | 'M' | 'H'`) se mantiene ortogonal al backend gráfico activo (`renderMode: 'hardware-webgl2' | 'software-fallback'`). Así, `P16` se modela limpiamente con `hardwareTier: 'L'` y `renderMode: 'software-fallback'` (`SwiftShader`/`llvmpipe`), evitando mezclar capacidades físicas de CPU/RAM con fallos de driver o renderizado por software.
+
 ### 7.2 Helper Parametrizado `forEachPersona`
 
 Para evitar repetir bucles manuales en cada suite de Vitest, `@evo-aim/core/testing` expondrá un envoltorio declarativo `forEachPersona(testFn)` compatible con `it.each`:
 
-- Ejecuta automáticamente la aserción recibida sobre las **20 personas (`P01`..`P20`)**, nombrando cada sub-caso con `[Pxx: resumen de ejes extremos]` para que cualquier fallo en CI señale al instante qué combinación de hardware/periférico/accesibilidad rompió la invariante.
-- En pruebas de `@evo-aim/core` y `@evo-aim/data` (rápidas en memoria, $< 1\text{ ms}$ por persona), **se ejecutan siempre las 20 personas completas**.
-- En pruebas E2E de ventana Electron con Playwright (`e2e/`), donde lanzar instancias completas tiene mayor coste temporal, un selector determinista `selectOrthogonalPersonas()` ejecuta el subconjunto mínimo que cubre todos los extremos visuales y de entrada (`P01` `720p@100 %` principiante, `P06` `4K@300 %` + `forced-colors` + `--text-scale: 1.5`, `P08` `reduced-motion` + tema claro, `P09` teclado-solo, `P10` `21:9` ultrawide, `P17` `5120x1440` `32:9`, `P18` motricidad reducida y `P19` lector de pantalla), pudiendo correr la matriz íntegra en pre-release.
+- Ejecuta automáticamente la aserción recibida sobre las **21 personas (`P01`..`P21`)**, nombrando cada sub-caso con `[Pxx: resumen de ejes extremos]` para que cualquier fallo en CI señale al instante qué combinación de hardware/periférico/accesibilidad rompió la invariante.
+- En pruebas de `@evo-aim/core` y `@evo-aim/data` (rápidas en memoria, $< 1\text{ ms}$ por persona), **se ejecutan siempre las 21 personas completas**.
+- En pruebas E2E de ventana Electron con Playwright (`e2e/`), donde lanzar instancias completas tiene mayor coste temporal, un selector determinista `selectOrthogonalPersonas()` ejecuta el subconjunto mínimo que cubre todos los extremos visuales y de entrada (`P01` `720p@100 %` principiante, `P06` `4K@300 %` + `forced-colors` + `--text-scale: 1.50`, `P08` `reduced-motion` + tema claro, `P09` teclado-solo, `P10` `21:9` ultrawide, `P17` `5120x1440` `32:9`, `P18` motricidad reducida, `P19` lector de pantalla y `P21` `1280x1024` `5:4` + `--text-scale: 0.85`), pudiendo correr la matriz íntegra en pre-release.
 
 ### 7.3 Test Obligatorio de Cobertura de la Matriz (`matrix-coverage.test.ts`)
 
 Un test unitario dedicado en la Capa 1.1 auditará el propio array `SYNTHETIC_PERSONAS` verificando automáticamente que:
 
-1. Tiene tamaño **$\ge 14$** (actualmente `20`, `P01`..`P20`) y todos los IDs son únicos.
+1. Tiene tamaño **$\ge 14$** (actualmente `21`, `P01`..`P21`) y todos los IDs son únicos.
 2. El 100 % de las entradas contiene literalmente `syntheticDisclaimer === 'SINTÉTICA, no representa a ningún usuario real'` y cae dentro de [`docs/SUPPORTED_RANGES.md`](./SUPPORTED_RANGES.md).
-3. Ningún extremo obligatorio queda huérfano si alguien edita la matriz en el futuro: presencia verificada de `DPI <= 400` y `>= 16 000`, `pollingRateHz === 125` y `8000`, `refreshRateHz === 60` y `360`, `4:3-native`, `4:3-stretched`, `16:9`, `16:10`, `21:9`, `32:9`, `osScalePercent === 100`, `150` y `300`, `win32`, `linux-wayland`, `linux-x11`, `darwin`, unidades `'cm'` e `'in'`, `AZERTY-ISO`, `hardwareTier === 'L'`, `'beginner-zero'`, `'pro'` con `'established-long'`, `'contradictory-short'` (`ADR-0018` R3), daltonismo, `reducedMotion: true`, `forcedColors: true`, `keyboardOnlyUi: true`, `screenReaderMode: true` y `reducedFineMotor: true`.
+3. Ningún extremo obligatorio queda huérfano si alguien edita la matriz en el futuro: presencia verificada de `DPI <= 400` y `>= 16 000`, `pollingRateHz === 125` y `8000`, `refreshRateHz === 60` y `360`, `5:4-native`, `4:3-native`, `4:3-stretched`, `16:9`, `16:10`, `21:9`, `32:9`, `osScalePercent === 100`, `150` y `300`, `textScale === 0.85` y `1.50`, `win32`, `linux-wayland`, `linux-x11`, `darwin`, unidades `'cm'` e `'in'`, `AZERTY-ISO`, `hardwareTier === 'L'` con `'hardware-webgl2'` y con `'software-fallback'` (`P16`), `'beginner-zero'`, `'pro'` con `'established-long'`, `'contradictory-short'` (`ADR-0018` R3), `'deuteranopia'`, `'protanopia'`, `'tritanopia'`, `reducedMotion: true`, `forcedColors: true`, `keyboardOnlyUi: true`, `screenReaderMode: true` y `reducedFineMotor: true`.

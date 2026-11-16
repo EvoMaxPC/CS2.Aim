@@ -29,7 +29,7 @@ Ningún valor procedente de la configuración personal del propietario o de un c
 
 ### Regla R2 — Validación obligatoria contra una Matriz de Personas Sintéticas
 
-Todo cálculo matemático (`@evo-aim/core`), esquema de catálogo (`@evo-aim/data`), simulación/escenario (`@evo-aim/engine`) y vista de interfaz (`@evo-aim/ui`, `@evo-aim/desktop`) debe validarse contra la matriz canónica de personas sintéticas definida en [`docs/PERSONAS_MATRIX.md`](../PERSONAS_MATRIX.md) (`P01`..`P20`, 100 % sintéticas y diseñadas para cubrir los extremos de cada eje técnico y humano).
+Todo cálculo matemático (`@evo-aim/core`), esquema de catálogo (`@evo-aim/data`), simulación/escenario (`@evo-aim/engine`) y vista de interfaz (`@evo-aim/ui`, `@evo-aim/desktop`) debe validarse contra la matriz canónica de personas sintéticas definida en [`docs/PERSONAS_MATRIX.md`](../PERSONAS_MATRIX.md) (`P01`..`P21`, 100 % sintéticas y diseñadas para cubrir los extremos de cada eje técnico y humano).
 
 ### Regla R3 — Niveles de habilidad relativos al historial propio; rango declarado solo como _prior_ débil
 
@@ -48,7 +48,7 @@ La accesibilidad visual, motora y cognitiva no es un añadido cosmético de últ
 
 1. **Capa 0.1 (esta entrega documental):** establecimiento de [`docs/PERSONAS_MATRIX.md`](../PERSONAS_MATRIX.md), [`docs/SUPPORTED_RANGES.md`](../SUPPORTED_RANGES.md), los presupuestos medibles `QB-14`, `QB-15` y `QB-16` en [`docs/QUALITY_BARS.md`](../QUALITY_BARS.md), criterios de adaptabilidad por capa en [`docs/ROADMAP.md`](../ROADMAP.md) y casilla obligatoria en [`.github/PULL_REQUEST_TEMPLATE.md`](../../.github/PULL_REQUEST_TEMPLATE.md).
 2. **Herramienta estática `tools/check-no-owner-values` (activa en `pnpm verify` desde Capa 1 y ampliada en Capa 1.1):** bloquea rutas de usuario reales, IPs privadas de LAN, tokens/secretos e identificadores legados, ampliándose en la **Capa 1.1** para vigilar literales sospechosos no parametrizados fuera de fixtures sintéticos autorizados.
-3. **Capa 1.1 (infraestructura de código de adaptabilidad):** implementación en `@evo-aim/core/testing` del tipo `PersonaFixture`, el catálogo tipado de las personas sintéticas `P01`..`P20`, el helper parametrizado `forEachPersona(...)`, el test automático de cobertura de ejes de la matriz y la parametrización de suites unitarias y E2E por persona (véase [`docs/TESTING_STRATEGY.md`](../TESTING_STRATEGY.md)).
+3. **Capa 1.1 (infraestructura de código de adaptabilidad):** implementación en `@evo-aim/core/testing` del tipo `PersonaFixture`, el catálogo tipado de las personas sintéticas `P01`..`P21`, el helper parametrizado `forEachPersona(...)`, el test automático de cobertura de ejes de la matriz y la parametrización de suites unitarias y E2E por persona (véase [`docs/TESTING_STRATEGY.md`](../TESTING_STRATEGY.md)).
 
 ## Consecuencias
 
