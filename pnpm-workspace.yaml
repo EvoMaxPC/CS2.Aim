@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: Apache-2.0
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+minimumReleaseAge: 0
+
+allowBuilds:
+  better-sqlite3: true
+  electron: true
+  electron-winstaller: false
+  esbuild: true
