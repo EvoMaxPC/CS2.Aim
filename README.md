@@ -1,6 +1,6 @@
 # EVO-AIM-CS2
 
-> **Estado:** Pre-alpha (`layer-1-done` — Esqueleto, seguridad Electron y tooling) · **Licencia de código:** [Apache-2.0](./LICENSE) · **Plataformas objetivo:** Windows 10/11 (Tier 1), Linux x64 (Tier 2), macOS (Tier 3 best-effort)
+> **Estado:** Pre-alpha (`layer-1-done` en `main`; `layer-0.1` en curso — Adaptabilidad, fidelidad y licencia propuesta de datos) · **Licencia de código:** [Apache-2.0](./LICENSE) · **Plataformas objetivo:** Windows 10/11 (Tier 1), Linux x64 (Tier 2), macOS (Tier 3 best-effort)
 
 **EVO-AIM-CS2** es una plataforma de entrenamiento de puntería (_aim training_) de código abierto para PC, especializada al 100 % en **Counter-Strike 2**. Combina un motor 3D propio enfocado en fidelidad de input sub-frame e invarianza respecto a los FPS, cálculos verificables de sensibilidad (`eDPI`, `cm/360`, `FOV`), simulación de armas y patrones de _recoil_, ejercicios tácticos específicos de CS2, rutinas adaptativas, analítica explicativa y un módulo científico con trazabilidad documental estricta.
 
@@ -31,15 +31,19 @@ Toda la arquitectura, especificaciones, estándares de calidad y hoja de ruta es
 | Documento                                                  | Descripción                                                                                    |
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | [`PROGRESS.md`](./PROGRESS.md)                             | Estado actual del proyecto, checklist por capas (0–17), spikes y deuda técnica                 |
-| [`docs/VISION.md`](./docs/VISION.md)                       | Visión de producto, segmentos de jugadores, personas, historias de usuario y no-objetivos      |
-| [`docs/QUALITY_BARS.md`](./docs/QUALITY_BARS.md)           | Presupuestos medibles (`QB-01`..`QB-13`), invarianza FPS y criterios de validación             |
+| [`docs/VISION.md`](./docs/VISION.md)                       | Visión de producto, principio Adaptativo por diseño, segmentos, historias y no-objetivos       |
+| [`docs/QUALITY_BARS.md`](./docs/QUALITY_BARS.md)           | Presupuestos medibles (`QB-01`..`QB-19`), invarianza FPS, adaptabilidad y fidelidad CS2        |
+| [`docs/PERSONAS_MATRIX.md`](./docs/PERSONAS_MATRIX.md)     | **Lectura clave:** 21 personas 100 % sintéticas (`P01`..`P21`) y cobertura de ejes extremos    |
+| [`docs/SUPPORTED_RANGES.md`](./docs/SUPPORTED_RANGES.md)   | **Lectura clave:** rangos soportados por eje y degradación determinista fuera de rango         |
+| [`docs/FIDELITY_SPEC.md`](./docs/FIDELITY_SPEC.md)         | **Lectura clave:** matriz de fidelidad frente a CS2, estado `"por verificar"` y exclusiones    |
+| [`docs/TRAINER_PARITY.md`](./docs/TRAINER_PARITY.md)       | Taxonomía de 12 categorías de ejercicios con nombres propios `evo.*` y capa asociada           |
 | [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)           | Arquitectura Electron + TypeScript + Three.js + SQLite, `PlatformAdapter`, game loop e IPC     |
 | [`docs/PLATFORM_SUPPORT.md`](./docs/PLATFORM_SUPPORT.md)   | Matriz de soporte multiplataforma (Windows Tier 1, Linux Tier 2, macOS Tier 3)                 |
 | [`docs/HARDWARE_TIERS.md`](./docs/HARDWARE_TIERS.md)       | Escalabilidad de hardware (Tiers L/M/H), presets gráficos y accesibilidad de periféricos       |
-| [`docs/ROADMAP.md`](./docs/ROADMAP.md)                     | Plan de ejecución incremental en 18 capas (Capa 0 a Capa 17) y sub-capas                       |
-| [`docs/RISKS_AND_SPIKES.md`](./docs/RISKS_AND_SPIKES.md)   | Registro de riesgos (`R1`–`R17`) y experimentos técnicos (`SPIKE-1`..`SPIKE-6`)                |
-| [`docs/DECISIONS.md`](./docs/DECISIONS.md)                 | Índice de _Architecture Decision Records_ (`ADR-0001` a `ADR-0014`)                            |
-| [`docs/DATA_POLICY.md`](./docs/DATA_POLICY.md)             | Política de verificación de datos externos, armas y literatura científica                      |
+| [`docs/ROADMAP.md`](./docs/ROADMAP.md)                     | Plan de ejecución incremental por capas (`0`, `0.1`, `1`, `1.1` y `2` a `17`) y sub-capas      |
+| [`docs/RISKS_AND_SPIKES.md`](./docs/RISKS_AND_SPIKES.md)   | Registro de riesgos (`R1`–`R17`), spikes (`SPIKE-1`..`SPIKE-6`) y seguimientos post-Capa 1     |
+| [`docs/DECISIONS.md`](./docs/DECISIONS.md)                 | Índice de _Architecture Decision Records_ (`ADR-0001` a `ADR-0019`)                            |
+| [`docs/DATA_POLICY.md`](./docs/DATA_POLICY.md)             | Política de datos, medición propia reproducible (`ADR-0019`) y propuesta `CC BY 4.0` (`DT-03`) |
 | [`docs/CONVENTIONS.md`](./docs/CONVENTIONS.md)             | Estándares TypeScript strict, reglas de hot path, unidades, Git y licencias                    |
 | [`docs/TESTING_STRATEGY.md`](./docs/TESTING_STRATEGY.md)   | Pirámide de pruebas, determinismo, property-based testing, invarianza FPS y E2E                |
 | [`docs/DEVELOPMENT.md`](./docs/DEVELOPMENT.md)             | Guía práctica de desarrollo local, scripts `pnpm`, requisitos por SO y resolución de problemas |
@@ -88,4 +92,4 @@ Consulta [`docs/DEVELOPMENT.md`](./docs/DEVELOPMENT.md), [`docs/VERIFY_ON_WINDOW
 
 ## Licencia
 
-El código fuente de **EVO-AIM-CS2** se distribuye bajo la licencia **Apache License 2.0** (véase [`LICENSE`](./LICENSE)). La licencia aplicable a los catálogos de datos verificados (`/packages/data`) se encuentra pendiente de ratificación antes de la Capa 6 (véase [`docs/adr/0008-open-source-license.md`](./docs/adr/0008-open-source-license.md) y [`docs/adr/0014-open-source-policy.md`](./docs/adr/0014-open-source-policy.md)).
+El código fuente de **EVO-AIM-CS2** se distribuye bajo la licencia **Apache License 2.0** (véase [`LICENSE`](./LICENSE) y [`docs/adr/0008-open-source-license.md`](./docs/adr/0008-open-source-license.md)). Para los futuros catálogos curados de datos en `/packages/data` se registra **CC BY 4.0** con estado **`PROPUESTA`**, pendiente de confirmación explícita del mantenedor (`DT-03`) antes de la **Capa 6**, capa en la que se incorporará el texto completo de la licencia de datos junto con el contenido del paquete (actualmente `/packages/data` es solo un esqueleto; véanse [`docs/adr/0014-open-source-policy.md`](./docs/adr/0014-open-source-policy.md) y [`docs/DATA_POLICY.md`](./docs/DATA_POLICY.md)).

@@ -65,6 +65,7 @@ Para proteger la integridad legal, la seguridad anti-cheat y el foco de ingenier
 2. **La fidelidad del aim es un derecho independiente del bolsillo:** el cálculo del impacto y los _counts_ del ratón nunca dependen de la tasa de refresco ni del preset gráfico (`ADR-0012`).
 3. **Honestidad estadística y científica:** si una métrica tiene tamaño muestral insuficiente ($N < 30$ ensayos válidos) o un dato de zoom no tiene confirmación oficial (`verified: false`), la interfaz lo declara abiertamente.
 4. **Soberanía de los datos del jugador:** todos los runs, perfiles y métricas viven localmente en la carpeta `EVO-AIM-CS2` del usuario en SQLite documentado, exportable y sin bloqueo propietario.
+5. **Adaptativo por diseño (`ADR-0018`):** EVO-AIM-CS2 jamás asume la sensibilidad, resolución, relación de aspecto (`5:4` a `32:9`), escalado de pantalla (`100 %`–`300 %`), disposición de teclado (`QWERTY`, `AZERTY`, `60 %`), capacidad sensorial/motora ni nivel competitivo de su creador. Todo cálculo, interfaz y escenario se valida contra una matriz de personas 100 % sintéticas ([`docs/PERSONAS_MATRIX.md`](./PERSONAS_MATRIX.md), `P01`..`P21`), evalúa la progresión respecto al propio historial del jugador (usando cualquier rango declarado solo como _prior_ inicial débil) y trata la accesibilidad (`rem`, `reduced-motion`, `forced-colors`, estados no dependientes solo del color, navegación por teclado y lectores de pantalla fuera del canvas 3D) como requisito de primera clase.
 
 ---
 

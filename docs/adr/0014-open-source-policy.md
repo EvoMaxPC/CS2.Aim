@@ -27,8 +27,11 @@ Establecemos las cuatro columnas de gobierno open source de EVO-AIM-CS2:
 3. **Política de CERO Telemetría por Defecto:**
    - La aplicación se distribuye con **cero telemetría y cero analítica remota**.
    - Cualquier futuro mecanismo de reporte de fallos (a ratificar en la **Capa 17**) será estrictamente **opt-in**, desactivado por defecto, auditable en código abierto y sin servicios opacos de terceros por defecto.
-4. **Licencia de Datos separada y acotada:**
-   - El licenciamiento de los catálogos de `/packages/data` queda registrado como decisión abierta obligatoria (`CC BY 4.0` vs `CC0 1.0`) a cerrar antes de iniciar la **Capa 6**.
+4. **Licencia de Datos separada para `/packages/data` (`CC BY 4.0` — Estado `PROPUESTA`, `DT-03`):**
+   - **Propuesta registrada:** **Creative Commons Attribution 4.0 International (`CC BY 4.0`)** para los catálogos curados, escenarios declarativos y fichas científicas de `/packages/data`, con estado **`PROPUESTA`** pendiente de confirmación explícita del mantenedor (`DT-03`) antes de la **Capa 6** (alternativa evaluada: `CC0 1.0`).
+   - **Atribución requerida bajo `CC BY 4.0`:** quien redistribuya o adapte sustancialmente los catálogos curados deberá conservar el crédito a `"EVO-AIM-CS2 contributors"`, un enlace al repositorio oficial (`https://github.com/EvoMaxPC/evo-aim-cs2`), el enlace a `https://creativecommons.org/licenses/by/4.0/` e indicación de si se realizaron cambios (los meros hechos físicos/matemáticos puros no reclaman copyright más allá de la selección, estructura y notas verificadas).
+   - **Compatibilidad con `Apache-2.0`:** el código ejecutable TypeScript del monorepo (incluidos validadores y tipos) permanece 100 % bajo **`Apache-2.0`**, mientras que `CC BY 4.0` aplica únicamente a los artefactos de datos/documentación cargados como contenido; ambas licencias son permisivas y coexistentes en una misma distribución sin contaminación copyleft (`THIRD_PARTY_NOTICES.md` y la pantalla "Acerca de" satisfacen la atribución).
+   - **Calendario del archivo de licencia de datos:** dado que en Capas 1–5 `/packages/data` es únicamente un paquete esqueleto sin catálogos publicados, **el texto completo de la licencia de datos (`packages/data/LICENSE-DATA`) se añadirá junto con los catálogos reales en la Capa 6** una vez ratificado `DT-03`.
 
 ## Consecuencias
 

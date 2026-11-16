@@ -1,6 +1,6 @@
-# ADR-0008: Licencia Open Source (Apache-2.0 para Código; Datos Pendientes)
+# ADR-0008: Licencia Open Source Apache-2.0 para el Código y Separación de Licencia de Datos
 
-- **Estado:** Accepted _(provisional hasta confirmación definitiva del propietario antes de abrir contribuciones externas masivas)_
+- **Estado:** Accepted
 - **Fecha:** 2026-11-13
 - **Decisores:** Mantenedor Principal (`@EvoMaxPC`)
 
@@ -21,12 +21,10 @@ EVO-AIM-CS2 nace como un proyecto **open source** público. Elegir la licencia d
 
 1. **Licencia del código fuente (`/LICENSE`):** adoptamos **Apache License, Version 2.0 (`Apache-2.0`)**, con aviso de copyright colectivo `"Copyright 2026 EVO-AIM-CS2 contributors"` y recomendación de cabecera `SPDX-License-Identifier: Apache-2.0` en los archivos de código.
 2. **Política de contribuciones:** conforme a la Sección 5 de Apache-2.0 y mediante firma **DCO (`Signed-off-by`)** en cada commit (sin CLA; véase `ADR-0014`), toda contribución enviada al repositorio se licencia bajo Apache-2.0.
-3. **Licencia de los DATOS (`/packages/data`: catálogos de armas verificados, escenarios base y fichas científicas):** queda explícitamente marcada como **PENDIENTE DE DECISIÓN ANTES DE LA CAPA 6**:
-   - Candidata A: **CC BY 4.0** (exige atribución al reutilizar el esfuerzo de curación y verificación de datos; ojo: CC BY 4.0 es adecuada para contenido/bases de datos documentales, separada del código ejecutable).
-   - Candidata B: **CC0 1.0** (dedicación al dominio público de los datos fácticos para máxima interoperabilidad sin fricción con cualquier licencia de software).
+3. **Licencia de los DATOS (`/packages/data`: catálogos de armas verificados, escenarios base y fichas científicas):** separada formalmente de la licencia del código fuente ejecutable. En `ADR-0014` y `docs/DATA_POLICY.md` se registra **`CC BY 4.0`** con estado **`PROPUESTA`** (pendiente de confirmación explícita del mantenedor en `DT-03` antes de iniciar la **Capa 6**, momento en el que `/packages/data` dejará de ser un paquete esqueleto y se incorporará el texto íntegro de la licencia de datos).
 
 ## Consecuencias
 
 - **Positivas:** Apache-2.0 protege a mantenedores y usuarios frente a reclamaciones de patentes de contribuyentes, protege explícitamente el nombre del proyecto frente a usos indebidos de marca (cláusula 6) y mantiene total libertad futura tanto para la comunidad como para el fundador.
-- **Dificultad de relicenciar:** una vez que se fusionen commits de terceros bajo Apache-2.0 + DCO, el proyecto **no podrá cerrarse ni cambiarse unilateralmente a GPL incompatible** sobre el código aportado por terceros sin pedir permiso a cada autor (aunque Apache-2.0 sí permite incluir el código en distribuciones mayores cumpliendo la sección 4). Por ello el propietario debe confirmar que está conforme con Apache-2.0 antes de aceptar PRs externos.
-- **Acción pendiente obligatoria:** registrar un ADR complementario antes de iniciar la **Capa 6** cerrando la elección entre `CC BY 4.0` y `CC0 1.0` para `/packages/data`.
+- **Irreversibilidad sobre contribuciones de terceros:** una vez que se fusionan commits de terceros bajo Apache-2.0 + DCO, el proyecto **no puede cerrarse ni cambiarse unilateralmente a GPL incompatible** sobre el código aportado por terceros sin consentimiento de cada autor (Apache-2.0 sí permite incluir el código en distribuciones mayores cumpliendo su cláusula 4).
+- **Coordinación con datos (`DT-03`):** la confirmación final de la licencia de datos (`CC BY 4.0` propuesta frente a `CC0 1.0`) se ratificará antes de poblar los catálogos reales de `/packages/data` en la **Capa 6** (véase `ADR-0014`).

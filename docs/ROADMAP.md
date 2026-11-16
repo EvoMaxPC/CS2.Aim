@@ -1,8 +1,8 @@
 # ROADMAP.md — Hoja de Ruta Incremental por Capas (Capas 0 a 17)
 
-- **Propósito:** Planificar la construcción completa de EVO-AIM-CS2 en 18 capas secuenciales verificables, definiendo objetivos, entregables, dependencias, riesgos, criterios de aceptación medibles (_Definition of Done_), validación de _Quality Bars_ y división en sub-capas.
+- **Propósito:** Planificar la construcción completa de EVO-AIM-CS2 en capas secuenciales verificables (`0`, `0.1`, `1`, `1.1` y `2` a `17`), definiendo objetivos, entregables, dependencias, riesgos, criterios de aceptación medibles (_Definition of Done_), validación de _Quality Bars_, adaptabilidad por persona (`ADR-0018`), fidelidad verificable (`FIDELITY_SPEC.md`, `TRAINER_PARITY.md`) y división en sub-capas.
 - **Fecha:** 2026-11-13
-- **Versión:** 1.0.0
+- **Versión:** 1.1.0
 - **Estado:** Accepted
 
 ---
@@ -28,20 +28,50 @@
 
 ---
 
+### Capa 0.1 — Adaptabilidad por Diseño, Especificación de Fidelidad CS2 y Licencia Propuesta de Datos _(Solo Documentación)_
+
+- **Objetivo:** Cerrar los contratos documentales de adaptabilidad universal (cero acoplamiento a valores personales del propietario), fidelidad verificable frente a CS2, paridad taxonómica con entrenadores de puntería y propuesta formal de licencia para `/packages/data` antes de escribir la lógica de dominio.
+- **Entregables:**
+  - `ADR-0018` (Adaptabilidad por Diseño: reglas vinculantes `R1`–`R4`) y `ADR-0019` (`"Validated"` exige medición reproducible con método, datos, fecha, build de CS2 y autor).
+  - [`docs/PERSONAS_MATRIX.md`](./PERSONAS_MATRIX.md) (`21` personas 100 % sintéticas `P01`..`P21` cubriendo todos los extremos) y [`docs/SUPPORTED_RANGES.md`](./SUPPORTED_RANGES.md) (rangos soportados y degradación fuera de rango).
+  - [`docs/FIDELITY_SPEC.md`](./FIDELITY_SPEC.md) (matriz de 12 componentes con cada cifra de CS2 marcada `"por verificar"` y sección explícita de qué NO se replica) y [`docs/TRAINER_PARITY.md`](./TRAINER_PARITY.md) (12 categorías con nombres propios `evo.*`).
+  - Ampliación de [`docs/QUALITY_BARS.md`](./QUALITY_BARS.md) con `QB-14`..`QB-19`, procedimiento paso a paso y plantilla de medición reproducible en [`docs/DATA_POLICY.md`](./DATA_POLICY.md), registro de `CC BY 4.0` como `PROPUESTA` para `/packages/data` (`DT-03`) en `ADR-0014`/`DATA_POLICY.md`, cierre de estado `Accepted` en `ADR-0008`, diseño de `PersonaFixture` en [`docs/TESTING_STRATEGY.md`](./TESTING_STRATEGY.md) y casilla de personas en `.github/PULL_REQUEST_TEMPLATE.md`.
+- **Dependencias:** Capa 0 y Capa 1 fusionadas en `main`.
+- **Riesgos principales:** `R4`, `R5`, `R6`, `R11`, `R15`.
+- **Criterios de aceptación (DoD):** 100 % cambios documentales (`.md` + plantilla PR), `pnpm verify` en verde, `QB-01`..`QB-19` y `ADR-0001`..`ADR-0019` completos, `>= 14` personas sintéticas y 0 cadenas prohibidas. Tag tras merge: `layer-0.1-done`.
+- **Validación de `QUALITY_BARS`:** Definición formal de `QB-14`..`QB-19` (`QB-15` base y `QB-16` base ya activas desde Capa 1).
+
+---
+
 ### Capa 1 — Esqueleto del Monorepo, Tooling, CI Multi-OS y Línea Base
 
 - **Objetivo:** Inicializar el monorepo `pnpm` con los 5 paquetes `@evo-aim/*`, interfaz `PlatformAdapter` inicial, ventana Electron mínima segura, CI multiplataforma, verificación de licencias y línea base de peso/RAM.
 - **Entregables:**
   - Configuración raíz `pnpm-workspace.yaml`, `tsconfig.base.json` (`strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`), ESLint (con reglas de fronteras entre paquetes y aislamiento de `PlatformAdapter`), Prettier, Vitest y Playwright.
-  - Paquetes esqueleto `@evo-aim/core`, `@evo-aim/data`, `@evo-aim/engine`, `@evo-aim/ui` y `@evo-aim/desktop` (`apps/desktop/src/main/platform/{win32,linux,darwin}`).
-  - Workflows de GitHub Actions con **matriz CI (`windows-latest` Tier 1, `ubuntu-latest` Tier 2, `macos-latest` Tier 3 no bloqueante)** y check de DCO.
+  - Paquetes esqueleto `@evo-aim/core`, `@evo-aim/data`, `@evo-aim/engine`, `@evo-aim/ui` y `@evo-aim/desktop` (`apps/desktop/src/main/platform/{win32,linux,darwin}`), más `ADR-0015`..`ADR-0017` y `tools/check-no-owner-values`.
+  - Workflows de GitHub Actions con **matriz CI (`windows-latest` Tier 1, `ubuntu-latest` Tier 2)** y check de DCO/PR title.
   - **Verificación automática de licencias** en CI bloqueando dependencias GPL/AGPL/SSPL o no aprobadas (`ADR-0014`).
-  - Ejecución de **`SPIKE-4`** (empaquetado real de `better-sqlite3` con `electron-builder` en Windows x64 y Linux x64) y sonda diagnóstica inicial de **`SPIKE-6`** (lectura de capacidades de Pointer Lock por SO).
-  - Medición y publicación de la **línea base de tamaño de instalador, RAM en reposo y RAM en arranque** (`QB-09`), más verificación de versiones mínimas de SO soportadas contra la versión exacta de Electron instalada (`R14`).
+  - Ejecución de **`SPIKE-4`** (`better-sqlite3@13.1.1` N-API v10) y sonda diagnóstica inicial de **`SPIKE-6`**.
+  - Publicación de `docs/BASELINE.md` (`~1.02 MiB` en `out/`) y checklist `docs/VERIFY_ON_WINDOWS.md` para métricas físicas de `win-unpacked`/RAM/arranque (`DT-01`). _(Seguimiento registrado: `win.signAndEditExecutable: false` se resolverá con icono/metadatos y firma en la Capa 17)._
 - **Dependencias:** Capa 0.
 - **Riesgos principales:** `R10` (`better-sqlite3` ABI), `R12` (huella base Electron), `R14` (soporte SO Electron), `R15` (licencias transitivas).
-- **Criterios de aceptación (DoD):** `pnpm build`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:e2e` (ventana abre con `sandbox: true` y CSP activa) y chequeo de licencias pasan en verde en Windows y Linux; `SPIKE-4` documentado y superado; tabla de línea base de tamaño/RAM publicada.
-- **Validación de `QUALITY_BARS`:** Línea base de `QB-07`, `QB-08`, `QB-09`; activación en CI de `QB-11` y base de `QB-12`.
+- **Criterios de aceptación (DoD):** `pnpm build`, `pnpm verify` y CI en Windows y Ubuntu en verde (`8dd50b2`).
+- **Validación de `QUALITY_BARS`:** Línea base de `QB-07`, `QB-08`, `QB-09`; activación en CI de `QB-11`, `QB-12`, `QB-15` (base) y `QB-16` (base).
+
+---
+
+### Capa 1.1 — Infraestructura de Código de Adaptabilidad y Arnés de Personas Sintéticas
+
+- **Objetivo:** Materializar en código ejecutable y tests automatizados las reglas vinculantes de `ADR-0018`, `PERSONAS_MATRIX.md` y `SUPPORTED_RANGES.md` antes de construir el núcleo matemático de la Capa 2.
+- **Entregables:**
+  - Sub-módulo `@evo-aim/core/testing` exportando el tipo `PersonaFixture`, el catálogo tipado inmutable de las `21` personas sintéticas (`P01`..`P21`) y el helper parametrizado `forEachPersona(...)` (`TESTING_STRATEGY.md` §7).
+  - Test automatizado de cobertura de ejes de la matriz (`matrix-coverage.test.ts`), garantizando que ninguna edición futura deje sin cubrir algún extremo obligatorio (`QB-14`).
+  - Parametrización del suite E2E de Playwright (`e2e/app.spec.ts`) usando el subconjunto ortogonal de personas sintéticas (incluyendo `forced-colors`, `--text-scale`, `reduced-motion`, teclado-solo y relaciones de aspecto extremas; `QB-15`).
+  - Ampliación de `tools/check-no-owner-values` para reforzar la detección de literales de configuración acoplados fuera de fixtures sintéticos autorizados (`QB-16`).
+- **Dependencias:** Capa 0.1 y Capa 1.
+- **Riesgos principales:** Tiempo de ejecución en E2E si no se acota el subconjunto ortogonal de ventana Electron.
+- **Criterios de aceptación (DoD):** `pnpm verify` y `pnpm e2e` en verde en CI Windows y Ubuntu; 100 % de cobertura sobre el validador de matriz; tag `layer-1.1-done`.
+- **Validación de `QUALITY_BARS`:** Activación completa en CI de `QB-14`, refuerzo de `QB-15` y `QB-16`.
 
 ---
 
@@ -53,10 +83,12 @@
   - Proyecciones de campo de visión `Hor+` de CS2 (4:3 base $90^\circ \rightarrow$ 16:9, 16:10, 21:9 y modos _stretched_) y distancia monitor (_Monitor Distance_), marcando fórmulas de zoom no confirmadas conforme a `DATA_POLICY.md`.
   - PRNG determinista con semilla (`ADR-0005`) y utilidades estadísticas/geométricas (intersección rayo-esfera, rayo-cápsula, ángulos esféricos) con 0 dependencias externas.
   - Ejecución inicial de **`SPIKE-3`** (consistencia del PRNG y operaciones en coma flotante entre Windows y Linux).
-- **Dependencias:** Capa 1.
+- **Dependencias:** Capa 1.1.
 - **Riesgos principales:** `R5` (fórmulas zoom/FOV CS2), `R9` (determinismo IEEE-754 cross-OS).
 - **Criterios de aceptación (DoD):** Cobertura $\ge 95\%$ en `@evo-aim/core` con tests unitarios de tabla de referencia independiente y _property-based tests_ (`fast-check`); 0 imports de DOM/Node; `SPIKE-3` (fase matemática) en verde.
-- **Validación de `QUALITY_BARS`:** Base matemática de `QB-01`, `QB-05`, `QB-11`, `QB-13`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** `forEachPersona` valida las 21 personas (`P01`..`P21`) de `PERSONAS_MATRIX.md` sobre `eDPI`, `cm/360` / `in/360`, `countsPer360` y `Hor+ FOV` (`5:4` y `4:3` nativo/estirado a `32:9`), devolviendo `Result` claro fuera de `SUPPORTED_RANGES.md`.
+- **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Componentes `#1`, `#2` (base), `#3` y `#5` (intersección analítica) de `FIDELITY_SPEC.md`.
+- **Validación de `QUALITY_BARS`:** Base matemática de `QB-01`, `QB-05`, `QB-11`, `QB-13`, `QB-14`, `QB-17`.
 
 ---
 
@@ -70,7 +102,8 @@
 - **Dependencias:** Capa 1, Capa 2.
 - **Riesgos principales:** `R10` (módulo nativo en proceso secundario), corrupción ante cierre inesperado.
 - **Criterios de aceptación (DoD):** CRUD completo de perfiles y preferencias de sensibilidad/vídeo vía IPC validado; test de cierre abrupto post-transacción sin pérdida de datos; 0 accesos SQLite desde renderer.
-- **Validación de `QUALITY_BARS`:** `QB-10` (durabilidad y aislamiento fuera del hot path), `QB-12` (validación IPC).
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** El esquema de perfil persiste sin defaults personales del propietario (`QB-16`) todas las preferencias de `PERSONAS_MATRIX.md` (unidades `cm`/`in`, layout `QWERTY`/`AZERTY`, mano zurda, accesibilidad, escala `--text-scale` y _prior_ débil de habilidad).
+- **Validación de `QUALITY_BARS`:** `QB-10` (durabilidad y aislamiento fuera del hot path), `QB-12` (validación IPC), `QB-14`, `QB-16`.
 
 ---
 
@@ -86,7 +119,9 @@
 - **Dependencias:** Capa 2, Capa 3.
 - **Riesgos principales:** `R1`, `R2`, `R3`, `R8`, `R9`, `R12`, `R13`.
 - **Criterios de aceptación (DoD):** `SPIKE-1/2/3/5/6` aprobados (o activación documentada de Plan B si alguno fallase); escena jugable de tiro básico a 60–360 Hz cumpliendo `QB-01`, `QB-02`, `QB-04`, `QB-05`, `QB-06`, `QB-08`; primer tag `v0.1.0`.
-- **Validación de `QUALITY_BARS`:** `QB-01`, `QB-02`, `QB-03`, `QB-04`, `QB-05`, `QB-06`, `QB-08`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** El bucle de input/render soporta desde `P01`/`P16`/`P21` (`125–500 Hz` ratón, `60 Hz` pantalla, `Tier L` / fallback software, `5:4`) hasta `P04` (`8000 Hz`, `360 Hz`) y `P17` (`5120x1440` `32:9`), respeta escalados `100 %`–`300 %`, modos `5:4` y `4:3` estirado/barras negras a `32:9`, mano izquierda (`P15`), conmutación _toggle_ (`P18`), degradación `aria-live` sin atrapar foco para lectores de pantalla (`P19`) y binding por código físico (`AZERTY` `P05`).
+- **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Componentes `#1`, `#3`, `#4` (retícula base), `#9`, `#11` y `#12` de `FIDELITY_SPEC.md`.
+- **Validación de `QUALITY_BARS`:** `QB-01`, `QB-02`, `QB-03`, `QB-04`, `QB-05`, `QB-06`, `QB-08`, `QB-14`, `QB-17`.
 
 ---
 
@@ -99,7 +134,9 @@
 - **Dependencias:** Capa 4.
 - **Riesgos principales:** `R8` (asignaciones al reciclar objetivos), `R11` (complejidad excesiva del DSL).
 - **Criterios de aceptación (DoD):** Todos los escenarios cargan en $< 200\text{ ms}$, son 100 % deterministas por semilla y reciclan instancias en pools fijos (0 fugas tras 20 reinicios seguidos).
-- **Validación de `QUALITY_BARS`:** Mantenimiento de `QB-05`, `QB-06`, `QB-08`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** Cada escenario calcula el recorrido físico exigido para advertir si excede la alfombrilla declarada (`P14`), usa formas/símbolos además de color en objetivos discriminativos (`P07`, `P10`), escala su cadencia inicial al principiante absoluto (`P01`) y etiqueta explícitamente (`assistedMode: true`) los modificadores asistidos de accesibilidad motora (`P18`).
+- **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Componente `#5` y `#10` (base _greybox_) de `FIDELITY_SPEC.md`; Categorías `1` a `9` de `TRAINER_PARITY.md` (`evo.static.*`, `evo.micro.*`, `evo.flick.*`, `evo.dynamic.*`, `evo.track.*`, `evo.switch.*`, `evo.react.*`).
+- **Validación de `QUALITY_BARS`:** Mantenimiento de `QB-05`, `QB-06`, `QB-08`, `QB-14`, `QB-15`.
 
 ---
 
@@ -107,13 +144,15 @@
 
 - **Objetivo:** Modelar con trazabilidad estricta (`DATA_POLICY.md`) las armas clave de CS2, cadencia, penalización de movimiento, recuperación de precisión y patrones de _recoil_ / _spray control_.
 - **Entregables:**
-  - Decisión formal cerrada sobre la **licencia de los datos** en `/packages/data` (`CC BY 4.0` vs `CC0`; requisito de `ADR-0008` y `ADR-0014` previo a publicar este catálogo).
-  - Catálogo verificado de armas principales de CS2 (USP-S / Glock-18, Desert Eagle, MP9 / MAC-10, Galil / FAMAS, AK-47, M4A4, M4A1-S, AWP) con `DataProvenance` completo.
+  - Decisión formal cerrada sobre la **licencia de los datos** en `/packages/data` (ratificación de `CC BY 4.0` propuesta vs. `CC0` en `DT-03` + adición del archivo de texto completo de licencia de datos; requisito de `ADR-0008` y `ADR-0014` previo a publicar este catálogo).
+  - Catálogo verificado de armas principales de CS2 (USP-S / Glock-18, Desert Eagle, MP9 / MAC-10, Galil / FAMAS, AK-47, M4A4, M4A1-S, AWP) con `DataProvenance` completo y registro de medición reproducible (`ADR-0019`).
   - Simulador de _spray_ con objetivo fantasma opcional (_ghost target_), vista de compensación angular y puntuación por impacto/cabeza/cuerpo.
 - **Dependencias:** Capa 2, Capa 4, Capa 5.
 - **Riesgos principales:** `R4` (exactitud de datos de armas tras parches de CS2), `R5` (zoom AWP/Scout), `R7` (cero assets propietarios).
 - **Criterios de aceptación (DoD):** 100 % de armas con fuente documentada y test de validación en CI; cualquier parámetro no confirmado marcado `verified: false` con aviso en UI; invarianza FPS preservada con cadencias rápidas.
-- **Validación de `QUALITY_BARS`:** `QB-06`, `QB-13`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** Compensación física de _spray_ validada en todo el rango de `eDPI` (`P02` ultra-baja con aviso de altura vertical de alfombrilla vs. `P03`/`P13` ultra-alta), marcadores del _ghost target_ accesibles para daltonismo (`P07`, `P10`) y _viewmodel_ abstracto apto para zurdos (`P15`).
+- **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Componentes `#2` (zoom completo), `#7`, `#8` y `#9` de `FIDELITY_SPEC.md`; Categorías `10` y `11` de `TRAINER_PARITY.md` (`evo.weapon.recovery-tempo`, `evo.weapon.spray-transfer`).
+- **Validación de `QUALITY_BARS`:** `QB-06`, `QB-13`, `QB-14`, `QB-17`, `QB-19`.
 
 ---
 
@@ -127,7 +166,9 @@
 - **Dependencias:** Capa 3, Capa 5, Capa 6.
 - **Riesgos principales:** `R8` (captura de muestras en hot path), crecimiento de base de datos SQLite.
 - **Criterios de aceptación (DoD):** Guardado post-run completo en $< 100\text{ ms}$; 0 escrituras durante el run; consultas de historial de 1 000 runs sintéticos en $< 50\text{ ms}$.
-- **Validación de `QUALITY_BARS`:** `QB-08`, `QB-10`, `QB-11`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** Métricas, gráficas e intervalos se expresan en las unidades elegidas por la persona (`cm` o `in`), con tablas/resúmenes navegables solo con teclado y lector de pantalla (`P09`, `P19`), separación explícita de series `assistedMode: true` (`P18`) y series diferenciadas por patrón/símbolo además de color (`P06`, `P07`, `P10`).
+- **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Telemetría cinemática transversal para las Categorías `1` a `12` de `TRAINER_PARITY.md`.
+- **Validación de `QUALITY_BARS`:** `QB-08`, `QB-10`, `QB-11`, `QB-14`, `QB-15`.
 
 ---
 
@@ -140,7 +181,8 @@
 - **Dependencias:** Capa 5, Capa 7.
 - **Riesgos principales:** Recomendaciones opacas o sobreajuste a un único run atípico.
 - **Criterios de aceptación (DoD):** Funciones del planificador 100 % puras, deterministas y cubiertas con tests de propiedades ($\ge 95\%$); explicación textual auditable de cada ajuste.
-- **Validación de `QUALITY_BARS`:** `QB-11`.
+- **Criterio de adaptabilidad (`ADR-0018` R3, `QB-14`):** La progresión se ancla exclusivamente al historial propio del jugador (tratando el rango declarado solo como _prior_ débil en los primeros `< 5` runs y descartando priors contradictorios como `P20`), cubriendo desde principiante absoluto (`P01`) hasta semiprofesional (`P04`) y profesional con historial largo (`P17`) sin umbrales fijos elitistas.
+- **Validación de `QUALITY_BARS`:** `QB-11`, `QB-14`.
 
 ---
 
@@ -153,7 +195,9 @@
 - **Dependencias:** Capa 2, Capa 4, Capa 7.
 - **Riesgos principales:** `R2`, mala interpretación estadística por fatiga/aprendizaje entre rondas.
 - **Criterios de aceptación (DoD):** Validación completa de `QB-01`; informe final con rango de `eDPI` recomendado e indicador explícito de varianza/confianza.
-- **Validación de `QUALITY_BARS`:** Validación empírica final de `QB-01` y `QB-03`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** El asistente 360° y el _Sensitivity Finder_ operan en `cm` o `in` (`P03`, `P07`, `P12`, `P14`), adaptan giros parciales (`90°`/`180°`) cuando la alfombrilla no admite `360°` de una pasada (`P02`, `P14`) y etiquetan sesiones sin `unadjustedMovement` (`P12`).
+- **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Componente `#1` de `FIDELITY_SPEC.md` y Categoría `3` de `TRAINER_PARITY.md`.
+- **Validación de `QUALITY_BARS`:** Validación empírica final de `QB-01`, `QB-03`, `QB-14`, `QB-17`.
 
 ---
 
@@ -166,7 +210,8 @@
 - **Dependencias:** Capa 7 (`DATA_POLICY.md` estricto).
 - **Riesgos principales:** `R6` (alucinaciones bibliográficas o extrapolaciones médicas indebidas).
 - **Criterios de aceptación (DoD):** 100 % de entradas con DOI/URL real comprobado; descargo explícito de que no constituye consejo médico; cualquier nota secundaria no verificada lleva badge visible `Pendiente de verificación`.
-- **Validación de `QUALITY_BARS`:** `QB-13`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-15`):** Lectura fluida con escala tipográfica hasta `--text-scale: 1.5` y escalado del SO al `300 %` (`P06`), gráficas interactivas con resumen textual accesible y navegación completa con teclado (`P09`) y sin animaciones forzadas (`P08`).
+- **Validación de `QUALITY_BARS`:** `QB-13`, `QB-14`, `QB-15`.
 
 ---
 
@@ -179,7 +224,9 @@
 - **Dependencias:** Capa 5, Capa 6, Capa 7.
 - **Riesgos principales:** `R4` (parámetros de aceleración/fricción de CS2), `R7` (evitar cualquier parecido con mapas con copyright de Valve).
 - **Criterios de aceptación (DoD):** Métrica específica de sincronización `counterStrafeTimingErrorMs` validada; revisión legal confirmando uso exclusivo de geometría _greybox_ abstracta.
-- **Validación de `QUALITY_BARS`:** `QB-06`, `QB-13`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** _Counter-strafing_ vinculado a códigos físicos / teclas 100 % reasignables (`A`/`D` en `QWERTY`, `Q`/`D` en `AZERTY` `P05`, `K`/`M` o flechas en zurdos `P15`, teclados `60 %` sin numpad `P01`) y siluetas _greybox_ de alto contraste para daltonismo/baja visión (`P06`, `P07`, `P10`).
+- **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Componentes `#5`, `#6` y `#10` de `FIDELITY_SPEC.md`; Categorías `5`, `8`, `11` y `12` de `TRAINER_PARITY.md` (`evo.tactical.stop-and-clear`).
+- **Validación de `QUALITY_BARS`:** `QB-06`, `QB-13`, `QB-14`, `QB-18`.
 
 ---
 
@@ -192,7 +239,9 @@
 - **Dependencias:** Capa 7, Capa 8, Capa 11.
 - **Riesgos principales:** Puntuaciones infladas o dependientes de FPS (mitigado por `QB-06`).
 - **Criterios de aceptación (DoD):** Puntuaciones de benchmark reproducibles bit a bit desde replay; cero mecánicas _dark pattern_.
-- **Validación de `QUALITY_BARS`:** `QB-05`, `QB-06`.
+- **Criterio de adaptabilidad (`ADR-0018` R3, `QB-14`):** Niveles y percentiles móviles referenciados al historial propio del jugador (sin castigar a principiantes `P01`, profesionales `P17` ni hardware `Tier L` `60 Hz` gracias a `QB-06`), manteniendo separados los runs con modificadores asistidos (`assistedMode: true`, `P18`) y excluyendo de certificación sesiones sin `rawInputVerified` (`P12`) con explicación transparente.
+- **Mapeo `FIDELITY_SPEC` / `TRAINER_PARITY`:** Batería estandarizada sobre las Categorías `1` a `12` de `TRAINER_PARITY.md`.
+- **Validación de `QUALITY_BARS`:** `QB-05`, `QB-06`, `QB-14`.
 
 ---
 
@@ -206,7 +255,8 @@
 - **Dependencias:** Capas 4–12.
 - **Riesgos principales:** Sobrecarga de UI que afecte tiempos de carga (`QB-07`).
 - **Criterios de aceptación (DoD):** 100 % de cadenas externalizadas en `es` y `en`; validador automático de catálogos i18n en CI; test E2E completo del onboarding en Windows y Linux.
-- **Validación de `QUALITY_BARS`:** `QB-07`, `QB-11`.
+- **Criterio de adaptabilidad (`ADR-0018` R4, `QB-14`, `QB-15`):** Superación íntegra de E2E en los perfiles visuales/accesibles extremos de `PERSONAS_MATRIX.md` (`P01` `720p`, `P05` `AZERTY`, `P06` `4K@300 %` + `forced-colors` + `--text-scale: 1.50`, `P07`/`P10`/`P21` daltonismo, `P08` `reduced-motion`, `P09` teclado-solo, `P16` software fallback, `P17` `5120x1440` `32:9`, `P18` motricidad fina reducida sin límites de tiempo, `P19` lector de pantalla `NVDA`/`Narrator`/`VoiceOver`/`Orca` y `P21` `1280x1024` `5:4` + `--text-scale: 0.85`).
+- **Validación de `QUALITY_BARS`:** `QB-07`, `QB-11`, `QB-14`, `QB-15`.
 
 ---
 
@@ -220,7 +270,8 @@
 - **Dependencias:** Capa 4, Capa 5, Capa 7.
 - **Riesgos principales:** Vectores de seguridad al importar `.evoaim` maliciosos, divergencia de replays entre versiones (`R9`).
 - **Criterios de aceptación (DoD):** Suite de fuzzing de seguridad contra el parser `.evoaim` superada; reproducción exacta de replays verificada en Windows y Linux.
-- **Validación de `QUALITY_BARS`:** `QB-05`, `QB-12`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`, `QB-15`):** Los controles del reproductor de replays y del editor son operables con teclado y lector de pantalla (`P09`, `P19`), imponen cotas de entidades aptas para `Tier L` (`P01`, `P16`, `P21`) y reproducen con fidelidad replays grabados en cualquier persona/relación de aspecto (`5:4` a `32:9`).
+- **Validación de `QUALITY_BARS`:** `QB-05`, `QB-12`, `QB-14`, `QB-15`.
 
 ---
 
@@ -233,7 +284,8 @@
 - **Dependencias:** Capas 4–14.
 - **Riesgos principales:** `R1`, `R8`, `R12` en equipos integrados Tier L.
 - **Criterios de aceptación (DoD):** Cumplimiento verificado y documentado de `QB-04`, `QB-07`, `QB-08` y `QB-09` en equipos de referencia disponibles.
-- **Validación de `QUALITY_BARS`:** Validación final de `QB-04`, `QB-07`, `QB-08`, `QB-09`.
+- **Criterio de adaptabilidad (`ADR-0018`, `QB-14`):** Validación de rendimiento y ausencia de regresiones de latencia/memoria en los extremos de hardware y monitor de la matriz (`P01`/`P16`/`P21` `Tier L` `60 Hz`, `P06` `4K@300 %`, `P10` `3440x1440` Linux Wayland, `P17` `5120x1440` `32:9` y `P04` `360 Hz` + `8000 Hz`).
+- **Validación de `QUALITY_BARS`:** Validación final de `QB-04`, `QB-07`, `QB-08`, `QB-09`, `QB-14`.
 
 ---
 
@@ -247,7 +299,8 @@
 - **Dependencias:** Capa 1, Capa 3, Capa 13.
 - **Riesgos principales:** `R7` (límites estrictos anti-cheat), diferencias de rutas Steam en Linux/Flatpak/discos secundarios, seguridad del puerto local.
 - **Criterios de aceptación (DoD):** Funciona en Windows y Linux cuando CS2 está presente y **degrada con total elegancia sin errores** cuando CS2 o Steam no existen (incluyendo macOS); revisión de seguridad confirmando cero acceso a procesos/memoria de CS2.
-- **Validación de `QUALITY_BARS`:** `QB-12`.
+- **Mapeo `FIDELITY_SPEC`:** Componente `#4` (importación de retícula desde `.cfg`) e importación segura de sensibilidad (`#1`, `#2`) respetando `SUPPORTED_RANGES.md`.
+- **Validación de `QUALITY_BARS`:** `QB-12`, `QB-14`.
 
 ---
 
@@ -259,13 +312,13 @@
     - **Windows x64 (Tier 1):** instalador **NSIS** + ejecutable **Portable**.
     - **Linux x64 (Tier 2):** **AppImage** + paquete **`.deb`**.
     - **macOS (Tier 3 best-effort):** **`.dmg`**.
-  - Configuración de `electron-updater` desde GitHub Releases (donde proceda), publicación de hashes `SHA256SUMS.txt` y documentación clara en notas de release sobre estado de firma de código y avisos de SmartScreen/Gatekeeper si el binario no está firmado comercialmente (`R17`).
+  - Configuración de `electron-updater` desde GitHub Releases (donde proceda), restauración de icono/metadatos de recursos PE en el ejecutable de Windows (`win.signAndEditExecutable` estaba en `false` durante Capa 1 para evitar depender de binarios Wine/`rcedit` sin certificado; seguimiento de Capa 1), publicación de hashes `SHA256SUMS.txt` y documentación clara en notas de release sobre estado de firma de código y avisos de SmartScreen/Gatekeeper si el binario no está firmado comercialmente (`R17`).
   - Ratificación final de la política de **cero telemetría por defecto** (y, si se incluye exportación local o reporte de crash estrictamente opt-in, auditoría pública de su código).
   - Generación automatizada y verificación de `THIRD_PARTY_NOTICES.md` completo dentro de todos los paquetes distribuibles.
-- **Dependencias:** Todas las capas anteriores (0–16).
+- **Dependencias:** Todas las capas anteriores (`0`, `0.1`, `1`, `1.1`, `2`–`16`).
 - **Riesgos principales:** `R10`, `R15`, `R17` (SmartScreen / Gatekeeper / auto-update).
-- **Criterios de aceptación (DoD):** Todos los `QUALITY_BARS` (`QB-01`..`QB-13`) auditados; artefactos instalables probados en limpio en Windows y Linux; `THIRD_PARTY_NOTICES.md` al día; release candidata `v1.0.0-rc.1` / `v1.0.0` lista.
-- **Validación de `QUALITY_BARS`:** Auditoría global de cierre `QB-01`..`QB-13`.
+- **Criterios de aceptación (DoD):** Todos los `QUALITY_BARS` (`QB-01`..`QB-19`) auditados; artefactos instalables probados en limpio en Windows y Linux; `THIRD_PARTY_NOTICES.md` al día; release candidata `v1.0.0-rc.1` / `v1.0.0` lista.
+- **Validación de `QUALITY_BARS`:** Auditoría global de cierre `QB-01`..`QB-19`.
 
 ---
 
